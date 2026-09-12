@@ -1,0 +1,29 @@
+---
+import '../styles/global.css'
+
+interface Props {
+	titulo: string
+	descricao: string
+	ogImage?: string
+}
+
+const { titulo, descricao, ogImage } = Astro.props
+---
+
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{titulo}</title>
+		<meta name="description" content={descricao} />
+		<meta property="og:title" content={titulo} />
+		<meta property="og:description" content={descricao} />
+		{ogImage && <meta property="og:image" content={ogImage} />}
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
