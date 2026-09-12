@@ -68,7 +68,7 @@ Estes SIM continuam `.tsx` com React, importados nas páginas `.astro` com a dir
 
 ## 9. Página nova `/para-supermercados`
 
-- [ ] 9.1 `src/pages/para-supermercados.astro`: **conteúdo/copy inteiramente novo — PARE e peça o texto ao humano antes de escrever esta página** (não existe fonte nenhuma pra copiar; design.md - Non-Goals). Estrutura esperada: abre pela dor (custo de compras, tempo perdido cotando por telefone/planilha), depois introduz o produto, termina com CTA pra `/precos` ou "Criar conta" (spec `site/para-supermercados`)
+- [ ] 9.1 `src/pages/para-supermercados.astro`: usar o copy pronto em `copy-para-supermercados.md` (nesta pasta da change) — 6 seções na ordem exata do arquivo (dor → "isso te soa familiar" → solução → como funciona/link pra `/como-funciona` → resultado → CTA), título/descrição conforme o arquivo (spec `site/para-supermercados`). Se algo no arquivo parecer incompleto ou ambíguo, pare e pergunte — não invente texto além do que está lá
 
 ## 10. Verificação final
 
