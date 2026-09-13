@@ -212,6 +212,18 @@ body {
   animation: flash-green-anim var(--motion-flash) ease-out;
 }
 
+/* ── Animação: troca de passo no "Como funciona" (PassosAutoPlay) ──────────
+ * CSS puro em vez de framer-motion: dispara ao remontar (mudança de `key`),
+ * sem depender do engine de animação JS (AnimatePresence trava se o rAF
+ * fica parado — ex.: aba em segundo plano — porque espera o exit terminar). */
+@keyframes passo-entra {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.passo-entra {
+  animation: passo-entra 0.3s ease-out both;
+}
+
 /* ── Estilos base do cursor custom ──────────────────────────────────────── */
 @media (pointer: fine) {
   body:has([data-cursor-active]) {
@@ -241,7 +253,8 @@ body {
   .marquee-track,
   .grid-drift,
   .texto-gradiente-shimmer,
-  .flash-green {
+  .flash-green,
+  .passo-entra {
     animation: none;
   }
 }

@@ -1,37 +1,30 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { moeda } from '../../lib/formatters'
+import { PRODUTOS_DEMO, eanFormatado, type ProdutoDemo } from '../../lib/produtos-demo'
 
 // ── Dados de simulação ─────────────────────────────────────────────────────
 
 const FORNECEDORES = ['Aurora', 'Meridiano', 'Litoral'] as const
 
-type Produto = {
-  nome: string
-  ean: string
-  embalagem: string
-  itensPorEmbalagem: number
-  medida: string
+type Produto = ProdutoDemo & {
   precos: number[]
   volumeMes: number
 }
 
-const PRODUTOS: Produto[] = [
-  { nome: 'Arroz tipo 1', ean: '7896006711234', embalagem: 'Fardo', itensPorEmbalagem: 6, medida: '5 kg', precos: [179.4, 174.0, 185.4], volumeMes: 28 },
-  { nome: 'Feijão carioca', ean: '7891234500018', embalagem: 'Fardo', itensPorEmbalagem: 10, medida: '1 kg', precos: [84.0, 87.0, 82.0], volumeMes: 40 },
-  { nome: 'Óleo de soja', ean: '7891107101235', embalagem: 'Caixa', itensPorEmbalagem: 20, medida: '900 ml', precos: [142.0, 138.0, 148.0], volumeMes: 52 },
-  { nome: 'Açúcar refinado', ean: '7896015912346', embalagem: 'Fardo', itensPorEmbalagem: 10, medida: '1 kg', precos: [58.0, 60.5, 56.5], volumeMes: 24 },
-  { nome: 'Café torrado', ean: '7896005213457', embalagem: 'Fardo', itensPorEmbalagem: 10, medida: '500 g', precos: [168.0, 159.0, 164.0], volumeMes: 32 },
+const PRECOS_E_VOLUME: { precos: number[]; volumeMes: number }[] = [
+  { precos: [259.2, 268.8, 277.2], volumeMes: 26 },
+  { precos: [499.2, 484.8, 511.2], volumeMes: 20 },
+  { precos: [96.0, 99.2, 92.0], volumeMes: 35 },
+  { precos: [149.0, 154.0, 158.0], volumeMes: 18 },
 ]
+
+const PRODUTOS: Produto[] = PRODUTOS_DEMO.map((p, i) => ({ ...p, ...PRECOS_E_VOLUME[i] }))
 
 const PISO_FRAC = 0.82
 const INTERVALO_MS = 1500
 
 const round2 = (n: number) => Math.round(n * 100) / 100
 const idxMenor = (xs: number[]) => xs.indexOf(Math.min(...xs))
-
-function eanFormatado(ean: string) {
-  return ean.replace(/(\d{4})(\d{4})(\d{5})/, '$1 $2 $3')
-}
 
 function economiaProjetada(precos: number[][]): number {
   return PRODUTOS.reduce((soma, p, r) => {
@@ -141,9 +134,18 @@ export function GradeAoVivoDemo({ ativo = true }: { ativo?: boolean }) {
           </div>
         </div>
 
-        {/* Tabela */}
+        {/* Tabela — table-fixed + colgroup: larguras travadas para o preço não
+         * mudar de coluna quando o número de dígitos ou o ícone de vencedor
+         * aparece/some (senão a tabela oscila de largura e pisca um scroll
+         * horizontal a cada troca de preço). */}
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[340px] border-collapse text-left sm:min-w-[460px]">
+          <table className="w-full min-w-[340px] table-fixed border-collapse text-left sm:min-w-[460px]">
+            <colgroup>
+              <col style={{ width: '34%' }} />
+              {FORNECEDORES.map((f) => (
+                <col key={f} style={{ width: `${66 / FORNECEDORES.length}%` }} />
+              ))}
+            </colgroup>
             <thead>
               <tr className="text-[10px] uppercase tracking-wide text-white/40">
                 <th className="px-4 py-2 font-medium sm:px-5">Item</th>

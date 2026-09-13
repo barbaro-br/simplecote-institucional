@@ -6,11 +6,10 @@ import { moeda } from '../../../lib/formatters'
 import { TelaCard } from './TelaCard'
 
 const ITENS: { item: string; vencedor: string; preco: number; economia: number }[] = [
-  { item: 'Arroz tipo 1', vencedor: 'Meridiano', preco: 152.4, economia: 21.6 },
-  { item: 'Feijão carioca', vencedor: 'Litoral', preco: 74.2, economia: 7.8 },
-  { item: 'Óleo de soja', vencedor: 'Meridiano', preco: 128.9, economia: 13.1 },
-  { item: 'Açúcar refinado', vencedor: 'Aurora', preco: 49.6, economia: 6.9 },
-  { item: 'Café torrado', vencedor: 'Litoral', preco: 138.4, economia: 20.6 },
+  { item: 'Achocolatado Toddy 750g', vencedor: 'Aurora', preco: 259.2, economia: 24.0 },
+  { item: 'Leite em pó Ninho 380g', vencedor: 'Meridiano', preco: 484.8, economia: 34.0 },
+  { item: 'Coco ralado Menina 100g', vencedor: 'Litoral', preco: 92.0, economia: 7.0 },
+  { item: 'Bombom Garoto 1kg', vencedor: 'Aurora', preco: 149.0, economia: 16.0 },
 ]
 
 const total = ITENS.reduce((s, i) => s + i.economia, 0)
@@ -26,7 +25,7 @@ export function ResultadoDemo() {
     <TelaCard titulo="Resultado da cotação">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5 text-[11px] text-white/50 sm:px-5">
         <span>Vencedor de cada item</span>
-        <span className="text-white/70">5 itens · 3 fornecedores</span>
+        <span className="text-white/70">4 itens · 3 fornecedores</span>
       </div>
       <ul className="divide-y divide-white/[0.07]">
         {ITENS.map(({ item, vencedor, preco, economia }) => (
