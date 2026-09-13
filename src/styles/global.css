@@ -224,6 +224,18 @@ body {
   animation: passo-entra 0.3s ease-out both;
 }
 
+/* ── Animação: cursor "clicando" no preview de cadastro (Passo 1) ─────────── */
+@keyframes cursor-clica {
+  0%   { opacity: 0; transform: translate(24px, 24px) scale(1); }
+  35%  { opacity: 1; transform: translate(0, 0) scale(1); }
+  55%  { opacity: 1; transform: translate(0, 0) scale(0.8); }
+  75%  { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(0, 0) scale(1); }
+}
+.cursor-clica {
+  animation: cursor-clica 0.9s ease-in-out both;
+}
+
 /* ── Estilos base do cursor custom ──────────────────────────────────────── */
 @media (pointer: fine) {
   body:has([data-cursor-active]) {
@@ -254,7 +266,8 @@ body {
   .grid-drift,
   .texto-gradiente-shimmer,
   .flash-green,
-  .passo-entra {
+  .passo-entra,
+  .cursor-clica {
     animation: none;
   }
 }

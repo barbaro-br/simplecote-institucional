@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import { cn } from '../../lib/cn'
 import { useDeveAnimar } from '../../lib/reduzir-movimento'
 import { moeda } from '../../lib/formatters'
-import { PRODUTOS_DEMO, eanFormatado } from '../../lib/produtos-demo'
+import { PRODUTOS_DEMO } from '../../lib/produtos-demo'
 import { GradeAoVivoDemo } from './GradeAoVivoDemo'
 import { ResultadoDemo } from './telas/ResultadoDemo'
 
@@ -21,7 +20,7 @@ interface Passo {
   resumo: string
 }
 
-const INTERVALO_MS = 4000
+const INTERVALO_MS = 7000
 
 function IconeCaretLeft() {
   return (
@@ -68,9 +67,60 @@ function IconeCheck({ className = 'size-4' }: { className?: string }) {
   )
 }
 
-const DURACAO_ESTAGIO_CADASTRO_MS = [1400, 1300, 1900] as const
+function IconePlus({ className = 'size-2' }: { className?: string }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+      <path d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z"/>
+    </svg>
+  )
+}
+function IconeMinus({ className = 'size-2' }: { className?: string }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+      <path d="M228,128a12,12,0,0,1-12,12H40a12,12,0,0,1,0-24H216A12,12,0,0,1,228,128Z"/>
+    </svg>
+  )
+}
 
-/** Passo 1 — preview do app: formulário vazio → preenchendo → "confira seu e-mail". */
+const NOME_DEMO_CADASTRO = 'Mercado Bom Preço'
+const EMAIL_DEMO_CADASTRO = 'contato@mercadobompreco.com'
+const SENHA_DEMO_LEN = 10
+const DURACAO_ESTAGIO_CADASTRO_MS = [900, 3400, 1900] as const
+
+/** Revela `texto` progressivamente (efeito de digitação) enquanto `ativo`. */
+function useDigitacao(texto: string, ativo: boolean, velocidadeMs = 45): string {
+  const [chars, setChars] = useState(0)
+
+  useEffect(() => {
+    if (!ativo) {
+      setChars(0)
+      return
+    }
+    if (chars >= texto.length) return
+    const t = window.setTimeout(() => setChars((c) => c + 1), velocidadeMs)
+    return () => window.clearTimeout(t)
+  }, [ativo, chars, texto, velocidadeMs])
+
+  return texto.slice(0, chars)
+}
+
+function IconeCursor({ className = 'size-4' }: { className?: string }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+      <path d="M213.66,120.11,90.15,26.53A16,16,0,0,0,64.14,39.42L48.06,214.32a16,16,0,0,0,27.32,13l40.51-38.32,25.9,59.32a16,16,0,0,0,14.66,9.6,16.15,16.15,0,0,0,3-.28,16,16,0,0,0,12-11.55l19.53-77.36,26.6-16.79A16,16,0,0,0,213.66,120.11Z"/>
+    </svg>
+  )
+}
+
+/** Cursor pisca em texto (indica campo "focado" enquanto digita). */
+function CursorDigitando() {
+  return <span className="ml-0.5 inline-block h-3 w-px animate-pulse bg-text-2 align-middle" />
+}
+
+/**
+ * Passo 1 — preview do app: mouse clica no formulário → nome/e-mail/senha
+ * são "digitados" um de cada vez → "confira seu e-mail".
+ */
 function Passo1Preview() {
   const [estagio, setEstagio] = useState(0)
   const deveAnimar = useDeveAnimar()
@@ -81,6 +131,13 @@ function Passo1Preview() {
     return () => window.clearTimeout(t)
   }, [estagio, deveAnimar])
 
+  const digitando = estagio === 1
+  const nome = useDigitacao(NOME_DEMO_CADASTRO, digitando)
+  const nomeCompleto = nome.length === NOME_DEMO_CADASTRO.length
+  const email = useDigitacao(EMAIL_DEMO_CADASTRO, digitando && nomeCompleto)
+  const emailCompleto = email.length === EMAIL_DEMO_CADASTRO.length
+  const senha = useDigitacao('•'.repeat(SENHA_DEMO_LEN), digitando && emailCompleto, 60)
+
   return (
     <div className="w-full max-w-sm overflow-hidden rounded-xl border border-border bg-background shadow-lg">
       <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
@@ -90,41 +147,308 @@ function Passo1Preview() {
         <span className="ml-2 text-[10px] text-text-3">app.simplecote.app</span>
       </div>
       <div key={estagio} className="passo-entra space-y-3 p-4">
-        {estagio === 0 && (
-          <>
-            <div className="h-2 w-1/3 rounded bg-accent/60" />
-            <div className="h-8 rounded-md bg-surface-2" />
-            <div className="h-8 rounded-md bg-surface-2" />
-            <div className="rounded-md bg-accent py-2 text-center text-sm font-semibold text-accent-foreground ring-4 ring-accent/30">
-              Criar conta grátis
-            </div>
-          </>
-        )}
-        {estagio === 1 && (
-          <>
-            <div className="h-2 w-1/3 rounded bg-accent/60" />
-            <div className="flex h-8 items-center rounded-md bg-surface-2 px-3 text-xs text-text-2">
-              supermercado@email.com
-            </div>
-            <div className="flex h-8 items-center gap-1.5 rounded-md bg-surface-2 px-3">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <span key={i} className="size-2 rounded-full bg-text-2" />
-              ))}
-            </div>
-            <div className="rounded-md bg-accent py-2 text-center text-sm font-semibold text-accent-foreground">
-              Criar conta grátis
-            </div>
-          </>
-        )}
-        {estagio === 2 && (
+        {estagio === 2 ? (
           <div className="flex flex-col items-center gap-3 py-4 text-center">
             <IconeEnvelope className="size-10 text-accent" />
             <div>
               <p className="text-sm font-semibold text-text-1">Confira seu e-mail</p>
-              <p className="mt-1 text-xs text-text-3">Enviamos um link de confirmação pra você continuar</p>
+              <p className="mt-1 text-xs text-text-3">
+                Enviamos um link de verificação para <span className="text-text-2">{EMAIL_DEMO_CADASTRO}</span>
+              </p>
             </div>
           </div>
+        ) : (
+          <>
+            <div className="flex flex-col items-center gap-1 pb-1 text-center">
+              <span className="flex size-7 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">
+                S
+              </span>
+              <div className="text-sm font-bold text-text-1">SimpleCote</div>
+              <div className="text-[10px] text-text-3">Crie a conta do seu supermercado</div>
+            </div>
+
+            <div>
+              <label className="mb-1 block text-[10px] font-medium text-text-3">Nome do supermercado</label>
+              <div className="relative flex h-7 items-center rounded-md bg-surface-2 px-2.5 text-xs text-text-2">
+                {estagio === 0 ? (
+                  <span className="text-text-3">Supermercado do Zé</span>
+                ) : (
+                  <>
+                    {nome}
+                    {!nomeCompleto && <CursorDigitando />}
+                  </>
+                )}
+                {estagio === 0 && (
+                  <span className="cursor-clica absolute -right-1 -top-1 text-text-1">
+                    <IconeCursor />
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-1 block text-[10px] font-medium text-text-3">E-mail</label>
+              <div className="flex h-7 items-center rounded-md bg-surface-2 px-2.5 text-xs text-text-2">
+                {estagio === 0 ? (
+                  <span className="text-text-3">voce@empresa.com.br</span>
+                ) : (
+                  <>
+                    {email}
+                    {nomeCompleto && !emailCompleto && <CursorDigitando />}
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-1 block text-[10px] font-medium text-text-3">Senha</label>
+              <div className="flex h-7 items-center gap-1.5 rounded-md bg-surface-2 px-2.5">
+                {estagio === 0 ? (
+                  <span className="text-xs text-text-3">Mínimo 8 caracteres</span>
+                ) : (
+                  senha.split('').map((_, i) => <span key={i} className="size-1.5 rounded-full bg-text-2" />)
+                )}
+              </div>
+            </div>
+
+            <div
+              className={`rounded-md bg-accent py-2 text-center text-sm font-semibold text-accent-foreground transition-shadow ${
+                estagio === 0 ? 'ring-4 ring-accent/30' : ''
+              }`}
+            >
+              Criar conta grátis
+            </div>
+          </>
         )}
+      </div>
+    </div>
+  )
+}
+
+function IconeBusca({ className = 'size-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+      <path d="M229.66,218.34,182.06,170.7a92.15,92.15,0,1,0-11.31,11.31l47.63,47.65a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/>
+    </svg>
+  )
+}
+
+const QUERY_BUSCA_DEMO = 'achocolatado'
+const DURACAO_REVELAR_ITEM_MS = 550
+
+/**
+ * Passo 2 — busca ("achocolatado" digitado) → resultado aparece → itens vão
+ * sendo adicionados um por um (spinner → confirmado, como no app real).
+ */
+function Passo2Preview() {
+  const deveAnimar = useDeveAnimar()
+  const [fase, setFase] = useState<'buscando' | 'resultado' | 'lista'>('buscando')
+  const query = useDigitacao(QUERY_BUSCA_DEMO, fase === 'buscando', 70)
+  const queryCompleta = query.length === QUERY_BUSCA_DEMO.length
+
+  useEffect(() => {
+    if (!deveAnimar) return
+    if (fase === 'buscando' && queryCompleta) {
+      const t = window.setTimeout(() => setFase('resultado'), 500)
+      return () => window.clearTimeout(t)
+    }
+    if (fase === 'resultado') {
+      const t = window.setTimeout(() => setFase('lista'), 700)
+      return () => window.clearTimeout(t)
+    }
+  }, [fase, queryCompleta, deveAnimar])
+
+  const [revelados, setRevelados] = useState(0)
+  useEffect(() => {
+    if (!deveAnimar || fase !== 'lista') return
+    if (revelados >= ITENS_PASSO2.length) return
+    const t = window.setTimeout(() => setRevelados((r) => r + 1), DURACAO_REVELAR_ITEM_MS)
+    return () => window.clearTimeout(t)
+  }, [fase, revelados, deveAnimar])
+
+  return (
+    <div className="w-full max-w-sm space-y-2">
+      <div className="flex h-8 items-center gap-2 rounded-md border border-border bg-background px-3 text-xs text-text-3">
+        <IconeBusca className="size-3.5 shrink-0" />
+        {fase === 'buscando' ? (
+          <span className="text-text-2">
+            {query}
+            <CursorDigitando />
+          </span>
+        ) : (
+          <span>Buscar item ou bipar código...</span>
+        )}
+      </div>
+
+      {fase === 'resultado' && (
+        <div className="passo-entra flex items-center justify-between gap-2 rounded-md border border-accent/40 bg-accent/10 px-3 py-2">
+          <div className="min-w-0">
+            <div className="truncate text-sm font-medium text-text-1">Achocolatado Toddy</div>
+            <div className="text-[10px] text-text-3">Fardo c/ 12 · 750 g</div>
+          </div>
+          <IconePlus className="size-3.5 shrink-0 text-accent" />
+        </div>
+      )}
+
+      {fase === 'lista' && (
+        <div className="passo-entra space-y-1.5">
+          {ITENS_PASSO2.map((item, i) => {
+            const confirmado = i < revelados
+            const emProgresso = i === revelados
+            return (
+              <div
+                key={item.nome}
+                className={`flex items-center justify-between gap-2 rounded-md border px-3 py-1.5 transition-opacity ${
+                  confirmado || emProgresso ? 'border-accent/40 bg-accent/10 opacity-100' : 'border-border bg-background opacity-40'
+                }`}
+              >
+                <div className="min-w-0">
+                  <div className="truncate text-sm font-medium text-text-1">{item.nome}</div>
+                  <div className="text-[10px] text-text-3">
+                    {item.embalagem} c/ {item.itensPorEmbalagem} · {item.medida}
+                  </div>
+                </div>
+                {confirmado ? (
+                  <div className="flex shrink-0 items-center gap-0.5">
+                    <div className="flex h-7 w-9 items-center justify-center rounded-l border border-border bg-background text-sm font-semibold tabular-nums text-text-1">
+                      {item.quantidade}
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex h-3.5 w-5 items-center justify-center rounded-tr border border-border bg-surface-2 text-text-2">
+                        <IconePlus />
+                      </div>
+                      <div className="-mt-px flex h-3.5 w-5 items-center justify-center rounded-br border border-border bg-surface-2 text-text-2">
+                        <IconeMinus />
+                      </div>
+                    </div>
+                  </div>
+                ) : emProgresso ? (
+                  <span className="size-4 shrink-0 animate-spin rounded-full border-2 border-accent border-t-transparent" />
+                ) : null}
+              </div>
+            )
+          })}
+        </div>
+      )}
+
+      <div className="rounded-md border border-dashed border-border px-3 py-2 text-center text-xs text-text-3">
+        + adicionar mais itens
+      </div>
+    </div>
+  )
+}
+
+const REPRESENTANTES_DEMO = [
+  { nome: 'Distribuidora Aurora', email: 'joao@distribuidoraaurora.com.br', contato: '(11) 98888-1234' },
+  { nome: 'Comercial Meridiano', email: 'vendas@comercialmeridiano.com.br', contato: '(11) 97777-5678' },
+  { nome: 'Atacadão Litoral', email: 'contato@atacadaolitoral.com.br', contato: '(11) 96666-9012' },
+] as const
+const DURACAO_ESTAGIO_CONVITE_MS = [700, 700, 700, 900, 2200] as const
+
+/** Passo 3 — seleciona representantes um por um (como no app real) → convida → envelope. */
+function Passo3Preview() {
+  const [estagio, setEstagio] = useState(0)
+  const deveAnimar = useDeveAnimar()
+
+  useEffect(() => {
+    if (!deveAnimar) return
+    const t = window.setTimeout(() => setEstagio((e) => (e + 1) % 5), DURACAO_ESTAGIO_CONVITE_MS[estagio])
+    return () => window.clearTimeout(t)
+  }, [estagio, deveAnimar])
+
+  if (estagio === 4) {
+    return (
+      <div className="passo-entra flex flex-col items-center gap-5">
+        <div className="animate-bounce text-accent">
+          <IconeEnvelope className="size-20" />
+        </div>
+        <div className="animate-pulse flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-sm text-accent">
+          Convite por e-mail e WhatsApp
+        </div>
+      </div>
+    )
+  }
+
+  const marcados = Math.min(estagio, REPRESENTANTES_DEMO.length)
+  return (
+    <div key={estagio === 3 ? 'convidar' : 'lista'} className="passo-entra w-full max-w-sm space-y-2">
+      {REPRESENTANTES_DEMO.map((rep, i) => (
+        <div
+          key={rep.nome}
+          className={`flex items-center gap-3 rounded-md border px-3 py-2 transition-colors ${
+            i < marcados ? 'border-accent/40 bg-accent/10' : 'border-border bg-background'
+          }`}
+        >
+          <span
+            className={`flex size-5 shrink-0 items-center justify-center rounded border ${
+              i < marcados ? 'border-accent bg-accent text-accent-foreground' : 'border-border-strong'
+            }`}
+          >
+            {i < marcados && <IconeCheck className="size-3.5" />}
+          </span>
+          <div className="min-w-0">
+            <div className="truncate text-sm font-medium text-text-1">{rep.nome}</div>
+            <div className="truncate text-[10px] text-text-3">{rep.email}</div>
+            <div className="text-[10px] text-text-3">{rep.contato}</div>
+          </div>
+        </div>
+      ))}
+      <div
+        className={`rounded-md py-2 text-center text-sm font-semibold transition-colors ${
+          estagio === 3 ? 'bg-accent text-accent-foreground' : 'border border-dashed border-border text-text-3'
+        }`}
+      >
+        Convidar {marcados > 0 ? `${marcados} ` : ''}
+        {marcados === 1 ? 'representante' : 'representantes'}
+      </div>
+    </div>
+  )
+}
+
+const DURACAO_PARADO_ENVIO_MS = 1300
+const DURACAO_TRANSICAO_ENVIO_MS = 700
+const PAUSA_APOS_ENVIO_MS = 500
+
+/**
+ * Passo 6 — o "PDF" do pedido desce e entra no envelope; o envelope então
+ * cresce e voa pro lado sumindo (sinalizando o envio). Reinicia via `key`
+ * (remonta sem transição) em vez de reverter a animação de volta.
+ */
+function Passo6Envelope() {
+  const deveAnimar = useDeveAnimar()
+  const [ciclo, setCiclo] = useState(0)
+  const [enviando, setEnviando] = useState(false)
+
+  useEffect(() => {
+    if (!deveAnimar) return
+    setEnviando(false)
+    const t = window.setTimeout(() => setEnviando(true), DURACAO_PARADO_ENVIO_MS)
+    return () => window.clearTimeout(t)
+  }, [ciclo, deveAnimar])
+
+  useEffect(() => {
+    if (!deveAnimar || !enviando) return
+    const t = window.setTimeout(() => setCiclo((c) => c + 1), DURACAO_TRANSICAO_ENVIO_MS + PAUSA_APOS_ENVIO_MS)
+    return () => window.clearTimeout(t)
+  }, [enviando, deveAnimar])
+
+  return (
+    <div key={ciclo} className="absolute right-2 top-2 flex flex-col items-center">
+      {/* "PDF" do pedido descendo e entrando no envelope */}
+      <div
+        className={`mb-1 flex h-6 w-5 items-center justify-center rounded-sm bg-white text-[6px] font-bold text-[var(--brand-navy-deep,#122040)] shadow transition-all duration-500 ${
+          enviando ? 'translate-y-2 opacity-0' : 'translate-y-0 opacity-100'
+        }`}
+      >
+        PDF
+      </div>
+      {/* Envelope: recebe o PDF, cresce e voa pro lado sumindo */}
+      <div
+        className={`text-accent transition-all ${
+          enviando ? 'translate-x-10 -translate-y-2 scale-125 opacity-0 duration-700' : 'scale-100 opacity-100 duration-300'
+        }`}
+      >
+        <IconeEnvelope className="size-8" />
       </div>
     </div>
   )
@@ -146,45 +470,17 @@ function VisualPasso({ passo }: { passo: number }) {
         </div>
       )}
 
-      {/* Passo 2 — adicionando itens à cotação */}
+      {/* Passo 2 — busca → resultado → itens sendo adicionados um por um */}
       {passo === 2 && (
         <div key="passo2" className="passo-entra absolute inset-0 flex items-center justify-center p-6">
-          <div className="w-full max-w-sm space-y-2">
-            <div className="flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2.5 text-xs text-text-3">
-              Buscar item ou bipar código...
-            </div>
-            <div className="space-y-1.5">
-              {ITENS_PASSO2.map((item) => (
-                <div key={item.nome} className="flex items-center justify-between gap-2 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5">
-                  <div className="min-w-0">
-                    <div className="truncate text-sm font-medium text-text-1">{item.nome}</div>
-                    <div className="text-[10px] text-text-3">
-                      {item.embalagem} c/ {item.itensPorEmbalagem} · {item.medida} · {item.quantidade}x
-                    </div>
-                    <div className="font-mono text-[9px] text-text-3/80">{eanFormatado(item.ean)}</div>
-                  </div>
-                  <span className="flex shrink-0 items-center gap-1 text-xs text-accent">
-                    <IconeCheck className="size-3.5" /> adicionado
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div className="rounded-md border border-dashed border-border px-3 py-2 text-center text-xs text-text-3">
-              + adicionar mais itens
-            </div>
-          </div>
+          <Passo2Preview />
         </div>
       )}
 
-      {/* Passo 3 — convite fluindo por carta/e-mail */}
+      {/* Passo 3 — seleciona representantes, depois convite fluindo por carta/e-mail */}
       {passo === 3 && (
         <div key="passo3" className="passo-entra absolute inset-0 flex flex-col items-center justify-center gap-5 p-6">
-          <div className="animate-bounce text-accent">
-            <IconeEnvelope className="size-20" />
-          </div>
-          <div className="animate-pulse flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-sm text-accent">
-            Convite por e-mail e WhatsApp
-          </div>
+          <Passo3Preview />
         </div>
       )}
 
@@ -235,9 +531,7 @@ function VisualPasso({ passo }: { passo: number }) {
                 <span className="font-bold tabular-nums text-accent">{moeda(TOTAL_PEDIDO_DEMO)}</span>
               </div>
             </div>
-            <div className="animate-bounce absolute right-2 top-2 text-accent">
-              <IconeEnvelope className="size-8" />
-            </div>
+            <Passo6Envelope />
           </div>
         </div>
       )}
@@ -284,24 +578,8 @@ export function PassosAutoPlay({ passos }: { passos: Passo[] }) {
         </div>
       </div>
 
-      {/* Indicador de progresso (pontos) */}
-      <div className="flex shrink-0 items-center justify-center gap-2 pb-1 pt-2" aria-hidden="true">
-        {passos.map((p, i) => (
-          <button
-            key={p.num}
-            type="button"
-            onClick={() => ir(i)}
-            aria-label={`Ir para o passo ${p.num}`}
-            className={cn(
-              'h-2 rounded-full transition-all',
-              i === indice ? 'w-6 bg-accent' : 'w-2 bg-border hover:bg-text-3',
-            )}
-          />
-        ))}
-      </div>
-
       {/* Controles */}
-      <div className="flex shrink-0 items-center justify-center gap-3 pb-4 pt-1">
+      <div className="flex shrink-0 items-center justify-center gap-3 pb-4 pt-2">
         <button
           type="button"
           onClick={() => ir(indice - 1)}
@@ -315,8 +593,27 @@ export function PassosAutoPlay({ passos }: { passos: Passo[] }) {
           type="button"
           onClick={() => setPausado((p) => !p)}
           aria-label={pausado ? 'Retomar apresentação' : 'Pausar apresentação'}
-          className="flex size-9 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-text-1 transition-colors hover:bg-surface"
+          className="relative flex size-10 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-text-1 transition-colors hover:bg-surface"
         >
+          <svg className="absolute inset-0 -rotate-90" viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="20" r="16" fill="none" stroke="var(--border-strong)" strokeWidth="2.5" />
+          </svg>
+          {!pausado && deveAnimar && (
+            <svg key={`anel-${indice}`} className="absolute inset-0 -rotate-90" viewBox="0 0 40 40" aria-hidden="true">
+              <circle
+                cx="20"
+                cy="20"
+                r="16"
+                fill="none"
+                stroke="var(--accent)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                pathLength={100}
+                strokeDasharray={100}
+                style={{ animation: `deck-ring ${INTERVALO_MS}ms linear forwards` }}
+              />
+            </svg>
+          )}
           {pausado ? <IconePlay /> : <IconePause />}
         </button>
 
