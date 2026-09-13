@@ -1,0 +1,68 @@
+---
+/**
+ * Botão que "gruda" sutilmente no cursor perto dele — mesmo algoritmo
+ * (lerp em requestAnimationFrame) já usado no `useMagnetico` local dentro
+ * do DeckHero.tsx (ilha React), portado sem framework. Sempre renderiza um
+ * `<a>` — é o único uso real no site (CTAs "Criar conta"/"Começar agora").
+ * Categoria B.
+ */
+interface Props {
+  href: string
+  class?: string
+  'data-cursor'?: string
+}
+const { href, class: className, ...resto } = Astro.props
+---
+
+<a href={href} class:list={['botao-magnetico', className]} {...resto}>
+  <slot />
+</a>
+
+<script>
+  const RAIO = 24
+
+  function ponteiroFino(): boolean {
+    return typeof window.matchMedia === 'function' && window.matchMedia('(pointer: fine)').matches
+  }
+
+  document.querySelectorAll<HTMLElement>('.botao-magnetico').forEach((el) => {
+    let cx = 0
+    let cy = 0
+    let tx = 0
+    let ty = 0
+    let raf = 0
+
+    function animar() {
+      cx += (tx - cx) * 0.15
+      cy += (ty - cy) * 0.15
+      el.style.transform = `translate(${cx}px, ${cy}px)`
+      if (Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1) {
+        raf = requestAnimationFrame(animar)
+      } else {
+        raf = 0
+      }
+    }
+
+    el.addEventListener(
+      'pointermove',
+      (e) => {
+        if (!ponteiroFino()) return
+        const rect = el.getBoundingClientRect()
+        const dx = e.clientX - (rect.left + rect.width / 2)
+        const dy = e.clientY - (rect.top + rect.height / 2)
+        const dist = Math.hypot(dx, dy)
+        const fator = Math.min(1, RAIO / (dist || 1))
+        tx = dx * fator * 0.4
+        ty = dy * fator * 0.4
+        if (!raf) raf = requestAnimationFrame(animar)
+      },
+      { passive: true },
+    )
+
+    el.addEventListener('pointerleave', () => {
+      tx = 0
+      ty = 0
+      if (!raf) raf = requestAnimationFrame(animar)
+    })
+  })
+</script>

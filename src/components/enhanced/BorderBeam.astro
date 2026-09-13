@@ -1,0 +1,13 @@
+---
+/**
+ * Borda com brilho `conic-gradient` girando — 100% CSS (.border-beam em
+ * global.css já implementa a animação e o auto-desligar em
+ * prefers-reduced-motion). Categoria B: zero JS, zero React.
+ */
+interface Props {
+  class?: string
+}
+const { class: className } = Astro.props
+---
+
+<span aria-hidden="true" class:list={['pointer-events-none absolute inset-0 border-beam', className]} />

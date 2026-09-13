@@ -5,11 +5,11 @@
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
 import { HeroFundo } from '../components/islands/HeroFundo'
-import { SpotlightCard } from "../components/islands/SpotlightCard"
-import { CardTilt } from "../components/islands/CardTilt"
-import { BorderBeam } from "../components/islands/BorderBeam"
+import SpotlightCard from "../components/enhanced/SpotlightCard.astro"
+import CardTilt from "../components/enhanced/CardTilt.astro"
+import BorderBeam from "../components/enhanced/BorderBeam.astro"
 import { PLANOS } from '../data/planos'
-import { BotaoMagnetico } from '../components/islands/BotaoMagnetico'
+import BotaoMagnetico from '../components/enhanced/BotaoMagnetico.astro'
 
 function moeda(valor: number): string {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor)
@@ -35,9 +35,9 @@ function moeda(valor: number): string {
         <div class="grid w-full items-center gap-4 md:grid-cols-3 md:gap-6">
           {PLANOS.map((plano) => (
             <div class={plano.destaque ? 'relative h-full md:scale-105 z-10' : 'h-full'}>
-              <CardTilt client:load class="h-full">
-                <SpotlightCard client:load
-                  className={plano.destaque ? 'flex h-full flex-col p-7 border-transparent bg-bg-deep/95 shadow-glow backdrop-blur-xl rounded-2xl transition-transform duration-300 hover:-translate-y-1' : 'flex h-full flex-col p-7 border-border bg-surface-2 backdrop-blur-md rounded-2xl transition-transform duration-300 hover:-translate-y-1'}
+              <CardTilt class="h-full">
+                <SpotlightCard
+                  class={plano.destaque ? 'flex h-full flex-col p-7 border-transparent bg-bg-deep/95 shadow-glow backdrop-blur-xl rounded-2xl transition-transform duration-300 hover:-translate-y-1' : 'flex h-full flex-col p-7 border-border bg-surface-2 backdrop-blur-md rounded-2xl transition-transform duration-300 hover:-translate-y-1'}
                 >
                   {plano.destaque && (
                     <div class="mb-3 self-start rounded-full bg-accent px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent-foreground">
@@ -71,10 +71,9 @@ function moeda(valor: number): string {
                   </ul>
 
                   <div class="mt-4 w-full">
-                    <BotaoMagnetico client:load
-                      as="a"
+                    <BotaoMagnetico
                       href="https://app.simplecote.app/cadastro"
-                      className={
+                      class={
                         'inline-flex w-full items-center justify-center gap-1.5 rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline-none h-10 px-4 ' +
                         (plano.destaque
                           ? 'bg-accent text-accent-foreground shadow-glow hover:scale-[1.02]'
@@ -87,7 +86,7 @@ function moeda(valor: number): string {
                   </div>
                 </SpotlightCard>
               </CardTilt>
-              {plano.destaque && <BorderBeam client:load className="rounded-2xl" />}
+              {plano.destaque && <BorderBeam class="rounded-2xl" />}
             </div>
           ))}
         </div>

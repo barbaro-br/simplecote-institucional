@@ -11,9 +11,9 @@
  */
 import '../styles/global.css'
 import BrandLogo from '../components/static/BrandLogo.astro'
-import { CursorMais } from "../components/islands/CursorMais"
-import { BotaoMagnetico } from "../components/islands/BotaoMagnetico"
-import { Marquee } from "../components/islands/Marquee"
+import CursorMais from '../components/enhanced/CursorMais.astro'
+import BotaoMagnetico from '../components/enhanced/BotaoMagnetico.astro'
+import Marquee from '../components/enhanced/Marquee.astro'
 
 interface Props {
   titulo: string
@@ -52,7 +52,7 @@ const DIFERENCIAIS = [
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body class="flex h-dvh flex-col overflow-hidden text-foreground bg-background">
-    <CursorMais client:load />
+    <CursorMais />
 
     {!sem_chrome && (
       <header
@@ -97,10 +97,9 @@ const DIFERENCIAIS = [
               </a>
             </nav>
 
-            <BotaoMagnetico client:load
-              as="a"
+            <BotaoMagnetico
               href="https://app.simplecote.app/cadastro"
-              className="inline-flex items-center justify-center gap-1.5 rounded-md text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 h-9 px-4 py-2 bg-accent text-accent-foreground shadow hover:bg-accent/90 max-sm:px-3 max-sm:text-xs"
+              class="inline-flex items-center justify-center gap-1.5 rounded-md text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 h-9 px-4 py-2 bg-accent text-accent-foreground shadow hover:bg-accent/90 max-sm:px-3 max-sm:text-xs"
               data-cursor="mais"
             >
               Criar conta
@@ -174,7 +173,7 @@ const DIFERENCIAIS = [
 
     {!sem_chrome && (
       <div class="relative z-10 shrink-0 border-t border-border bg-bg-deep/80 py-3 backdrop-blur-md">
-        <Marquee client:load class="mx-auto max-w-6xl">
+        <Marquee class="mx-auto max-w-6xl">
           {DIFERENCIAIS.map((item) => (
             <span class="mx-6 flex items-center gap-2 text-sm font-medium text-text-2">
               <span class="size-1.5 rounded-full bg-accent" aria-hidden="true"></span>

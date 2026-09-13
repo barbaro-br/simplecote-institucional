@@ -7,9 +7,9 @@
 import SiteLayout from '../layouts/SiteLayout.astro'
 import { HeroFundo } from '../components/islands/HeroFundo'
 import Painel from '../components/static/Painel.astro'
-import { RevealSecao } from "../components/islands/RevealSecao"
+import RevealSecao from "../components/enhanced/RevealSecao.astro"
 import { ScrubText } from "../components/islands/ScrubText"
-import { SpotlightCard } from "../components/islands/SpotlightCard"
+import SpotlightCard from "../components/enhanced/SpotlightCard.astro"
 
 const LISTA_DOR = [
   'Você liga pra 5 fornecedores, um por um, e anota o preço numa planilha (ou no papel)',
@@ -40,7 +40,7 @@ const PASSOS = [
 
     <div class="relative z-10">
       <!-- Seção 1 — Abertura (a dor) -->
-      <RevealSecao client:load  class="px-4 pb-12 pt-20">
+      <RevealSecao class="px-4 pb-12 pt-20">
         <div data-reveal class="mx-auto max-w-3xl space-y-6 text-center">
           <h1 class="text-4xl font-bold tracking-tight text-text-1 sm:text-5xl md:text-6xl">
             <ScrubText client:visible>Pare de perder dinheiro cotando por telefone e WhatsApp</ScrubText>
@@ -52,7 +52,7 @@ const PASSOS = [
       </RevealSecao>
 
       <!-- Seção 2 — "Isso te soa familiar?" -->
-      <RevealSecao client:load  class="px-4 pb-16">
+      <RevealSecao class="px-4 pb-16">
         <Painel class="p-6 sm:p-10 md:p-14">
           <div data-reveal class="mb-8">
             <h2 class="text-2xl font-bold tracking-tight sm:text-3xl"><ScrubText client:visible>Isso te soa familiar?</ScrubText></h2>
@@ -74,7 +74,7 @@ const PASSOS = [
       </RevealSecao>
 
       <!-- Seção 3 — A solução -->
-      <RevealSecao client:load  class="px-4 pb-16">
+      <RevealSecao class="px-4 pb-16">
         <div data-reveal class="mx-auto max-w-3xl space-y-4 text-center">
           <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
             <ScrubText client:visible>Existe um jeito de fazer isso em minutos, não em dias</ScrubText>
@@ -86,7 +86,7 @@ const PASSOS = [
       </RevealSecao>
 
       <!-- Seção 4 — Como funciona (resumo + link) -->
-      <RevealSecao client:load  class="px-4 pb-16">
+      <RevealSecao class="px-4 pb-16">
         <Painel class="p-6 sm:p-10 md:p-14">
           <div data-reveal class="mb-8 text-center">
             <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">Como funciona, em 3 passos</h2>
@@ -119,13 +119,13 @@ const PASSOS = [
       </RevealSecao>
 
       <!-- Seção 5 — O resultado -->
-      <RevealSecao client:load  class="px-4 pb-16">
+      <RevealSecao class="px-4 pb-16">
         <div data-reveal class="mx-auto mb-8 max-w-2xl text-center">
           <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">O resultado: preço menor, sem esforço a mais</h2>
         </div>
         <div class="grid gap-6 md:grid-cols-3">
           {RESULTADO.map((texto) => (
-            <SpotlightCard client:load  class="p-6">
+            <SpotlightCard class="p-6">
               <div data-reveal class="flex items-start gap-3">
                 <svg class="mt-0.5 size-5 shrink-0 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
                   <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>
@@ -138,7 +138,7 @@ const PASSOS = [
       </RevealSecao>
 
       <!-- Seção 6 — CTA final -->
-      <RevealSecao client:load  class="px-4 pb-24">
+      <RevealSecao class="px-4 pb-24">
         <div data-reveal class="mx-auto max-w-xl text-center">
           <h2 class="mb-4 text-3xl font-bold tracking-tight">Comece grátis, sem cartão de crédito</h2>
           <div class="flex flex-wrap justify-center gap-3">

@@ -1,0 +1,23 @@
+---
+/**
+ * Faixa infinita via CSS animation (.marquee-track em global.css, já com
+ * auto-desligar em prefers-reduced-motion). Conteúdo duplicado direto no
+ * markup pro loop — mesmo truque da versão React, sem precisar de JS.
+ * Categoria B: zero JS.
+ */
+interface Props {
+  class?: string
+}
+const { class: className } = Astro.props
+---
+
+<div class:list={['overflow-hidden', className]}>
+  <div class="flex w-max marquee-track">
+    <div class="flex shrink-0 items-center">
+      <slot />
+    </div>
+    <div class="flex shrink-0 items-center" aria-hidden="true">
+      <slot />
+    </div>
+  </div>
+</div>

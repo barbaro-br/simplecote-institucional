@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # Vercel
 .vercel/
+
+# artefatos de debug do Playwright MCP
+.playwright-mcp/
+

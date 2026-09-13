@@ -1,0 +1,40 @@
+---
+/**
+ * Reveal de seção via GSAP + ScrollTrigger: itens marcados com `data-reveal`
+ * entram com fade + translate (stagger) ao rolar até a seção. GSAP já é
+ * framework-agnostic — mesma lib, mesma configuração da versão React
+ * (`lib/gsap-scroll.ts`), só chamada direto de um `<script>`. Categoria B.
+ */
+interface Props {
+  class?: string
+  id?: string
+}
+const { class: className, id } = Astro.props
+---
+
+<div class:list={['reveal-secao', className]} id={id}>
+  <slot />
+</div>
+
+<script>
+  import { gsap, ScrollTrigger, temMatchMedia } from '../../lib/gsap-scroll'
+
+  function deveAnimar(): boolean {
+    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  }
+
+  if (temMatchMedia() && deveAnimar()) {
+    document.querySelectorAll<HTMLElement>('.reveal-secao').forEach((el) => {
+      const itens = el.querySelectorAll('[data-reveal]')
+      if (itens.length === 0) return
+      gsap.from(itens, {
+        opacity: 0,
+        y: 24,
+        duration: 0.7,
+        ease: 'power2.out',
+        stagger: 0.08,
+        scrollTrigger: { trigger: el, start: 'top 80%' },
+      })
+    })
+  }
+</script>

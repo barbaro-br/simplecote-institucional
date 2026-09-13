@@ -1,0 +1,53 @@
+---
+/**
+ * Card com brilho radial que acompanha o ponteiro — CSS var atualizada por um
+ * único listener de `pointermove` na página (não por instância; barato mesmo
+ * com muitos cards). Categoria B: JS mínimo, sem framework.
+ */
+interface Props {
+  class?: string
+}
+const { class: className } = Astro.props
+---
+
+<div class:list={['spotlight-card relative overflow-hidden rounded-2xl border bg-background/60 backdrop-blur-sm', className]}>
+  <div
+    aria-hidden="true"
+    class="spotlight-card-glow pointer-events-none absolute inset-0 z-0 transition-opacity duration-500"
+  />
+  <div class="relative z-10">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .spotlight-card-glow {
+    background: radial-gradient(
+      400px circle at var(--spot-x, -1000px) var(--spot-y, -1000px),
+      color-mix(in srgb, var(--accent, var(--brand-mint)) 15%, transparent),
+      transparent 80%
+    );
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spotlight-card-glow {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function ativo() {
+    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  }
+
+  function aoMover(e: PointerEvent) {
+    if (!ativo()) return
+    document.querySelectorAll<HTMLElement>('.spotlight-card').forEach((el) => {
+      const rect = el.getBoundingClientRect()
+      el.style.setProperty('--spot-x', `${e.clientX - rect.left}px`)
+      el.style.setProperty('--spot-y', `${e.clientY - rect.top}px`)
+    })
+  }
+
+  window.addEventListener('pointermove', aoMover, { passive: true })
+</script>

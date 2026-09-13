@@ -1,0 +1,81 @@
+---
+/**
+ * Cursor custom que vira um "+" sobre `[data-cursor="mais"]`. Só ativo com
+ * `pointer: fine` e sem reduced-motion (mesma regra da versão React) — nos
+ * outros casos o `<span>` fica oculto via CSS, sem nenhum listener rodando.
+ * Categoria B.
+ */
+---
+
+<span id="cursor-mais" aria-hidden="true" class="cursor-mais pointer-events-none fixed left-0 top-0 z-[60] hidden md:block">
+  <span class="cursor-mais-anel flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/40 transition-all duration-200">
+    <span class="cursor-mais-sinal select-none text-2xl leading-none opacity-0 transition-opacity">+</span>
+  </span>
+</span>
+
+<style>
+  .cursor-mais {
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce), (pointer: coarse) {
+    .cursor-mais {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  function ativo(): boolean {
+    return (
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(pointer: fine)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+  }
+
+  if (ativo()) {
+    const cursor = document.getElementById('cursor-mais')
+    const anel = cursor?.querySelector<HTMLElement>('.cursor-mais-anel')
+    const sinal = cursor?.querySelector<HTMLElement>('.cursor-mais-sinal')
+
+    if (cursor && anel && sinal) {
+      let cx = -100
+      let cy = -100
+      let tx = -100
+      let ty = -100
+      let raf = 0
+
+      function animar() {
+        cx += (tx - cx) * 0.3
+        cy += (ty - cy) * 0.3
+        cursor!.style.transform = `translate(${cx}px, ${cy}px)`
+        raf = requestAnimationFrame(animar)
+      }
+      raf = requestAnimationFrame(animar)
+
+      window.addEventListener(
+        'pointermove',
+        (e) => {
+          tx = e.clientX
+          ty = e.clientY
+        },
+        { passive: true },
+      )
+
+      window.addEventListener(
+        'pointerover',
+        (e) => {
+          const alvo = e.target as Element | null
+          const sobreAlvo = Boolean(alvo?.closest?.('[data-cursor="mais"]'))
+          anel.className = `cursor-mais-anel flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-200 ${
+            sobreAlvo ? 'size-12 border-brand-mint bg-brand-mint/20 text-brand-mint' : 'size-5 border-foreground/40'
+          }`
+          sinal.className = `cursor-mais-sinal select-none text-2xl leading-none transition-opacity ${
+            sobreAlvo ? 'opacity-100' : 'opacity-0'
+          }`
+        },
+        { passive: true },
+      )
+    }
+  }
+</script>

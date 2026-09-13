@@ -1,0 +1,66 @@
+---
+/**
+ * Tilt 3D no hover (rotateX/rotateY seguindo o mouse), com suavização via
+ * lerp em requestAnimationFrame — mesmo algoritmo já usado pra
+ * BotaoMagnetico dentro do DeckHero (ilha React), só que aqui sem
+ * framework nenhum. Categoria B.
+ */
+interface Props {
+  class?: string
+}
+const { class: className } = Astro.props
+---
+
+<div class:list={['card-tilt', className]} style="perspective: 900px;">
+  <slot />
+</div>
+
+<script>
+  const RIGIDEZ = 0.18
+
+  function ponteiroFino(): boolean {
+    return typeof window.matchMedia === 'function' && window.matchMedia('(pointer: fine)').matches
+  }
+  function deveAnimar(): boolean {
+    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  }
+
+  document.querySelectorAll<HTMLElement>('.card-tilt').forEach((el) => {
+    let rx = 0
+    let ry = 0
+    let trx = 0
+    let try_ = 0
+    let raf = 0
+
+    function animar() {
+      rx += (trx - rx) * RIGIDEZ
+      ry += (try_ - ry) * RIGIDEZ
+      el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`
+      if (Math.abs(trx - rx) > 0.05 || Math.abs(try_ - ry) > 0.05) {
+        raf = requestAnimationFrame(animar)
+      } else {
+        raf = 0
+      }
+    }
+
+    el.addEventListener(
+      'pointermove',
+      (e) => {
+        if (!deveAnimar() || !ponteiroFino()) return
+        const rect = el.getBoundingClientRect()
+        const px = (e.clientX - rect.left) / rect.width - 0.5
+        const py = (e.clientY - rect.top) / rect.height - 0.5
+        trx = py * -12
+        try_ = px * 12
+        if (!raf) raf = requestAnimationFrame(animar)
+      },
+      { passive: true },
+    )
+
+    el.addEventListener('pointerleave', () => {
+      trx = 0
+      try_ = 0
+      if (!raf) raf = requestAnimationFrame(animar)
+    })
+  })
+</script>
