@@ -7,23 +7,87 @@
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
 import { HeroFundo } from '../components/islands/HeroFundo'
-import Marquee from '../components/enhanced/Marquee.astro'
-import { siAstro, siReact, siVite, siSpring, siVercel } from 'simple-icons'
+import { siSentry } from 'simple-icons'
 
 const CONTATO_EMAIL = 'f.montalvao@icloud.com'
 const CONTATO_GITHUB = 'https://github.com/barbaro-br'
 const CONTATO_LINKEDIN = 'https://www.linkedin.com/in/br-barbaro/'
 
-// Java e Heroku não têm ícone no pacote simple-icons (marca restrita pela
-// Oracle/Salesforce) — usam monograma como alternativa.
-const STACK = [
-  { titulo: 'Site institucional', nome: 'Astro', cor: `#${siAstro.hex}`, path: siAstro.path, href: 'https://astro.build' },
-  { titulo: 'Aplicativo', nome: 'React', cor: `#${siReact.hex}`, path: siReact.path, href: 'https://react.dev' },
-  { titulo: 'Aplicativo', nome: 'Vite', cor: `#${siVite.hex}`, path: siVite.path, href: 'https://vite.dev' },
-  { titulo: 'Backend', nome: 'Java', cor: '#f89820', href: 'https://www.java.com' },
-  { titulo: 'Backend', nome: 'Spring', cor: `#${siSpring.hex}`, path: siSpring.path, href: 'https://spring.io' },
-  { titulo: 'Deploy', nome: 'Vercel', cor: `#${siVercel.hex}`, path: siVercel.path, href: 'https://vercel.com' },
-  { titulo: 'Deploy', nome: 'Heroku', cor: '#c9a0ff', href: 'https://www.heroku.com' },
+// Ícones baixados de techicons.dev (public/tech-icons/) — cobrem quase tudo.
+// O que não tem ícone próprio (Spring Boot/JPA/Mail/Actuator/Thymeleaf, todos
+// sub-projetos do ecossistema Spring) reaproveita a folha do Spring; Sentry
+// vem do pacote simple-icons; Brevo não tem ícone disponível, usa monograma.
+const icone = (arquivo: string) => `/tech-icons/${arquivo}.svg`
+
+const GRUPOS_TECH = [
+  {
+    titulo: 'Frontend',
+    subtitulo: 'Site institucional + aplicativo',
+    itens: [
+      { nome: 'TypeScript', img: icone('TypeScript'), href: 'https://www.typescriptlang.org' },
+      { nome: 'React', img: icone('React'), href: 'https://react.dev' },
+      { nome: 'Astro', img: icone('Astro'), href: 'https://astro.build' },
+      { nome: 'Vite', img: icone('Vite'), href: 'https://vite.dev' },
+    ],
+  },
+  {
+    titulo: 'Backend',
+    subtitulo: 'API e regras de negócio',
+    itens: [
+      { nome: 'Java', img: icone('Java'), href: 'https://www.java.com' },
+      { nome: 'Spring Boot', img: icone('Spring'), href: 'https://spring.io/projects/spring-boot' },
+      { nome: 'Spring Framework', img: icone('Spring'), href: 'https://spring.io' },
+      { nome: 'Spring Data JPA', img: icone('Hibernate'), href: 'https://spring.io/projects/spring-data-jpa' },
+      { nome: 'Spring Mail', img: icone('Spring'), href: 'https://docs.spring.io/spring-framework/reference/integration/email.html' },
+      { nome: 'SpringDoc / Swagger', img: icone('Swagger'), href: 'https://springdoc.org' },
+      { nome: 'Thymeleaf', img: icone('Spring'), href: 'https://www.thymeleaf.org' },
+    ],
+  },
+  {
+    titulo: 'Banco de dados',
+    subtitulo: 'Onde os dados vivem',
+    itens: [{ nome: 'PostgreSQL', img: icone('PostgresSQL'), href: 'https://www.postgresql.org' }],
+  },
+  {
+    titulo: 'Deploy & Infra',
+    subtitulo: 'Onde tudo roda',
+    itens: [
+      { nome: 'Vercel', img: icone('Vercel'), href: 'https://vercel.com' },
+      { nome: 'Heroku', img: icone('Heroku'), href: 'https://www.heroku.com' },
+      { nome: 'Docker', img: icone('Docker'), href: 'https://www.docker.com' },
+    ],
+  },
+  {
+    titulo: 'Observabilidade',
+    subtitulo: 'Erros e saúde do sistema',
+    itens: [
+      { nome: 'Sentry', path: siSentry.path, cor: `#${siSentry.hex}`, href: 'https://sentry.io' },
+      { nome: 'Spring Actuator', img: icone('Spring'), href: 'https://docs.spring.io/spring-boot/reference/actuator/index.html' },
+    ],
+  },
+  {
+    titulo: 'E-mail',
+    subtitulo: 'Convites e notificações',
+    itens: [{ nome: 'Brevo', mono: 'B', cor: '#0b996e', href: 'https://www.brevo.com' }],
+  },
+  {
+    titulo: 'IDEs',
+    subtitulo: 'Onde o código é escrito',
+    itens: [
+      { nome: 'IntelliJ IDEA', img: icone('IntelliJ-IDEA'), href: 'https://www.jetbrains.com/idea/' },
+      { nome: 'VS Code', img: icone('Visual-Studio-Code-(VS-Code)'), href: 'https://code.visualstudio.com' },
+      { nome: 'DataGrip', img: icone('DataGrip'), href: 'https://www.jetbrains.com/datagrip/' },
+    ],
+  },
+  {
+    titulo: 'Versionamento & CI/CD',
+    subtitulo: 'Histórico e deploy automático',
+    itens: [
+      { nome: 'Git', img: icone('Git'), href: 'https://git-scm.com' },
+      { nome: 'GitHub', img: icone('GitHub'), href: 'https://github.com' },
+      { nome: 'GitHub Actions', img: icone('GitHub-Actions'), href: 'https://github.com/features/actions' },
+    ],
+  },
 ]
 ---
 
@@ -74,39 +138,51 @@ const STACK = [
           <h2 data-reveal class="mb-6 text-center text-2xl font-bold tracking-tight text-text-1 sm:text-3xl">
             Tecnologia por trás do SimpleCote
           </h2>
-          <div data-reveal class="w-full [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-            <Marquee>
-              {STACK.map((item) => (
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="mx-3 flex h-52 w-56 shrink-0 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-surface-2 px-6 transition-colors hover:border-accent/40"
-                  data-cursor="mais"
-                >
-                  {item.path ? (
-                    <svg
-                      class="size-14"
-                      viewBox="0 0 24 24"
-                      fill={item.nome === 'Vercel' ? '#fff' : item.cor}
-                    >
-                      <path d={item.path} />
-                    </svg>
-                  ) : (
-                    <span
-                      class="flex size-14 shrink-0 items-center justify-center rounded-xl text-2xl font-extrabold text-[var(--brand-navy-deep,#122040)]"
-                      style={`background:${item.cor}`}
-                    >
-                      {item.nome[0]}
-                    </span>
-                  )}
-                  <div class="text-center">
-                    <div class="text-xl font-bold text-text-1">{item.nome}</div>
-                    <div class="text-[10px] uppercase tracking-wide text-text-3">{item.titulo}</div>
+          <div id="tech-cards" class="relative w-full flex-1 min-h-0">
+            {GRUPOS_TECH.map((grupo, gi) => (
+              <div
+                class:list={['tech-card passo-entra flex h-full items-center justify-center', gi === 0 && 'is-active']}
+                hidden={gi !== 0}
+                data-tech-card
+              >
+                <div class="w-full max-w-3xl overflow-y-auto rounded-3xl border border-border bg-surface-2 p-8 sm:p-10">
+                  <div class="mb-8 text-center">
+                    <div class="text-3xl font-bold text-text-1">{grupo.titulo}</div>
+                    <div class="mt-1 text-text-3">{grupo.subtitulo}</div>
                   </div>
-                </a>
-              ))}
-            </Marquee>
+                  <div class="flex flex-wrap justify-center gap-5">
+                    {grupo.itens.map((item) => (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-tech-icone
+                        class="flex w-28 flex-col items-center gap-3 rounded-2xl border border-border bg-background px-3 py-5 transition-colors hover:border-accent/40"
+                        data-cursor="mais"
+                      >
+                        <span class="flex size-16 shrink-0 items-center justify-center rounded-xl bg-white p-2.5 shadow-sm">
+                          {item.img ? (
+                            <img src={item.img} alt="" class="size-full object-contain" />
+                          ) : item.path ? (
+                            <svg class="size-full" viewBox="0 0 24 24" fill={item.cor}>
+                              <path d={item.path} />
+                            </svg>
+                          ) : (
+                            <span
+                              class="flex size-full items-center justify-center rounded-lg text-xl font-extrabold text-white"
+                              style={`background:${item.cor}`}
+                            >
+                              {item.mono}
+                            </span>
+                          )}
+                        </span>
+                        <span class="text-center text-xs font-medium leading-tight text-text-2">{item.nome}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -226,15 +302,45 @@ const STACK = [
       transform: none;
     }
   }
+
+  /* Ícones de tecnologia revelando em sequência dentro do card ativo */
+  /* Ícone "salta" do nada — dispara sozinho quando o .tech-card ancestral sai
+   * de `hidden` (animation reinicia automaticamente ao voltar a ficar visível,
+   * sem precisar de JS pra retrigger). */
+  @keyframes tech-icone-pop {
+    0%   { opacity: 0; transform: scale(0.3) translateY(10px); }
+    55%  { opacity: 1; transform: scale(1.12) translateY(0); }
+    80%  { transform: scale(0.96); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  [data-tech-icone] {
+    opacity: 0;
+    animation: tech-icone-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  [data-tech-icone]:nth-child(1) { animation-delay: 0.05s; }
+  [data-tech-icone]:nth-child(2) { animation-delay: 0.18s; }
+  [data-tech-icone]:nth-child(3) { animation-delay: 0.31s; }
+  [data-tech-icone]:nth-child(4) { animation-delay: 0.44s; }
+  [data-tech-icone]:nth-child(5) { animation-delay: 0.57s; }
+  [data-tech-icone]:nth-child(6) { animation-delay: 0.7s; }
+  [data-tech-icone]:nth-child(7) { animation-delay: 0.83s; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-tech-icone] {
+      animation: none;
+      opacity: 1;
+    }
+  }
 </style>
 
 <script>
-  const INTERVALO_MS = 8000
+  const INTERVALO_MS = 11000
+  const DURACAO_CATEGORIA_TECH_MS = 6000
   const container = document.getElementById('sn-slides')
 
   if (container) {
     const slides = Array.from(container.querySelectorAll<HTMLElement>('.sn-slide'))
     const N = slides.length
+    const qtdCategoriasTech = document.querySelectorAll('[data-tech-card]').length
     let indice = 0
     let timer = 0
 
@@ -247,17 +353,24 @@ const STACK = [
     const iconePause = document.getElementById('sn-icon-pause')
     const iconePlay = document.getElementById('sn-icon-play')
 
+    // O slide de tecnologia precisa de tempo proporcional ao nº de categorias
+    // (cada uma tem seu próprio mini-ciclo de ícones aparecendo).
+    function duracaoDoSlide(i: number): number {
+      const temTech = slides[i]?.querySelector('#tech-cards')
+      return temTech ? qtdCategoriasTech * DURACAO_CATEGORIA_TECH_MS : INTERVALO_MS
+    }
+
     function reiniciarAnel() {
       if (!anel) return
       anel.style.animation = 'none'
       void anel.getBoundingClientRect()
-      anel.style.animation = pausado ? 'none' : `deck-ring ${INTERVALO_MS}ms linear forwards`
+      anel.style.animation = pausado ? 'none' : `deck-ring ${duracaoDoSlide(indice)}ms linear forwards`
     }
 
     function agendar() {
       window.clearTimeout(timer)
       if (pausado) return
-      timer = window.setTimeout(() => mostrar(indice + 1), INTERVALO_MS)
+      timer = window.setTimeout(() => mostrar(indice + 1), duracaoDoSlide(indice))
     }
 
     function mostrar(i: number) {
@@ -296,6 +409,23 @@ const STACK = [
     } else {
       reiniciarAnel()
       agendar()
+    }
+
+    // Mini-carrossel das categorias de tecnologia (Frontend/Backend/Deploy)
+    const techCards = Array.from(document.querySelectorAll<HTMLElement>('[data-tech-card]'))
+    if (techCards.length > 0 && !prefereReduzido) {
+      let techIndice = 0
+
+      function mostrarTech(i: number) {
+        techIndice = ((i % techCards.length) + techCards.length) % techCards.length
+        techCards.forEach((card, idx) => {
+          const ativo = idx === techIndice
+          card.hidden = !ativo
+          card.classList.toggle('is-active', ativo)
+        })
+      }
+
+      window.setInterval(() => mostrarTech(techIndice + 1), DURACAO_CATEGORIA_TECH_MS)
     }
   }
 </script>
