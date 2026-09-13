@@ -8,11 +8,12 @@ import { ResultadoDemo } from './telas/ResultadoDemo'
 const QUANTIDADES_PASSO2 = [3, 2, 4, 2] as const
 const ITENS_PASSO2 = PRODUTOS_DEMO.map((p, i) => ({ ...p, quantidade: QUANTIDADES_PASSO2[i] }))
 
-const ITENS_PEDIDO_DEMO = [
-  { item: 'Achocolatado Toddy 750g', embalagem: 'Fardo c/ 12', quantidade: 3, precoFardo: 259.2 },
-  { item: 'Bombom Garoto 1kg', embalagem: 'Fardo c/ 10', quantidade: 2, precoFardo: 149.0 },
+/** 3 pedidos — um por fornecedor vencedor (mesmos vencedores do Passo 5). */
+const PEDIDOS_DEMO = [
+  { empresa: 'Distribuidora Aurora', resumo: 'Achocolatado Toddy, Bombom Garoto', total: 3 * 259.2 + 2 * 149.0 },
+  { empresa: 'Comercial Meridiano', resumo: 'Leite em pó Ninho', total: 2 * 484.8 },
+  { empresa: 'Atacadão Litoral', resumo: 'Coco ralado Menina', total: 4 * 92.0 },
 ] as const
-const TOTAL_PEDIDO_DEMO = ITENS_PEDIDO_DEMO.reduce((s, i) => s + i.precoFardo * i.quantidade, 0)
 
 interface Passo {
   num: number
@@ -405,50 +406,56 @@ function Passo3Preview() {
   )
 }
 
-const DURACAO_PARADO_ENVIO_MS = 1300
-const DURACAO_TRANSICAO_ENVIO_MS = 700
-const PAUSA_APOS_ENVIO_MS = 500
+const DURACAO_ENVIO_PEDIDO_MS = 1000
 
-/**
- * Passo 6 — o "PDF" do pedido desce e entra no envelope; o envelope então
- * cresce e voa pro lado sumindo (sinalizando o envio). Reinicia via `key`
- * (remonta sem transição) em vez de reverter a animação de volta.
- */
-function Passo6Envelope() {
+/** Passo 6 — os 3 pedidos (um por fornecedor vencedor) são "enviados" um por um. */
+function Passo6Preview() {
   const deveAnimar = useDeveAnimar()
-  const [ciclo, setCiclo] = useState(0)
-  const [enviando, setEnviando] = useState(false)
+  const [enviados, setEnviados] = useState(0)
 
   useEffect(() => {
     if (!deveAnimar) return
-    setEnviando(false)
-    const t = window.setTimeout(() => setEnviando(true), DURACAO_PARADO_ENVIO_MS)
+    if (enviados >= PEDIDOS_DEMO.length) return
+    const t = window.setTimeout(() => setEnviados((e) => e + 1), DURACAO_ENVIO_PEDIDO_MS)
     return () => window.clearTimeout(t)
-  }, [ciclo, deveAnimar])
-
-  useEffect(() => {
-    if (!deveAnimar || !enviando) return
-    const t = window.setTimeout(() => setCiclo((c) => c + 1), DURACAO_TRANSICAO_ENVIO_MS + PAUSA_APOS_ENVIO_MS)
-    return () => window.clearTimeout(t)
-  }, [enviando, deveAnimar])
+  }, [enviados, deveAnimar])
 
   return (
-    <div key={ciclo} className="absolute right-2 top-2 flex flex-col items-center">
-      {/* "PDF" do pedido descendo e entrando no envelope */}
-      <div
-        className={`mb-1 flex h-6 w-5 items-center justify-center rounded-sm bg-white text-[6px] font-bold text-[var(--brand-navy-deep,#122040)] shadow transition-all duration-500 ${
-          enviando ? 'translate-y-2 opacity-0' : 'translate-y-0 opacity-100'
-        }`}
-      >
-        PDF
+    <div className="w-full max-w-sm space-y-3">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-semibold text-text-1">3 pedidos gerados</span>
+        <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-medium text-accent">
+          {Math.min(enviados, PEDIDOS_DEMO.length)}/{PEDIDOS_DEMO.length} enviados
+        </span>
       </div>
-      {/* Envelope: recebe o PDF, cresce e voa pro lado sumindo */}
-      <div
-        className={`text-accent transition-all ${
-          enviando ? 'translate-x-10 -translate-y-2 scale-125 opacity-0 duration-700' : 'scale-100 opacity-100 duration-300'
-        }`}
-      >
-        <IconeEnvelope className="size-8" />
+      <div className="space-y-2">
+        {PEDIDOS_DEMO.map((p, i) => {
+          const enviado = i < enviados
+          const enviando = i === enviados
+          return (
+            <div
+              key={p.empresa}
+              className={`flex items-center justify-between gap-2 rounded-md border px-3 py-2.5 transition-colors ${
+                enviado ? 'border-accent/40 bg-accent/10' : 'border-border bg-background'
+              }`}
+            >
+              <div className="min-w-0">
+                <div className="truncate text-sm font-medium text-text-1">{p.empresa}</div>
+                <div className="truncate text-[10px] text-text-3">{p.resumo}</div>
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="text-xs font-semibold tabular-nums text-text-2">{moeda(p.total)}</span>
+                {enviado ? (
+                  <IconeCheck className="size-4 text-accent" />
+                ) : enviando ? (
+                  <span className="size-4 animate-spin rounded-full border-2 border-accent border-t-transparent" />
+                ) : (
+                  <IconeEnvelope className="size-4 text-text-3" />
+                )}
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
@@ -498,41 +505,10 @@ function VisualPasso({ passo }: { passo: number }) {
         </div>
       )}
 
-      {/* Passo 6 — pedido vira carta enviada ao representante */}
+      {/* Passo 6 — os 3 pedidos sendo enviados aos fornecedores vencedores */}
       {passo === 6 && (
         <div key="passo6" className="passo-entra absolute inset-0 flex items-center justify-center p-6">
-          <div className="relative w-full max-w-sm">
-            <div className="space-y-3 rounded-md border border-border bg-background p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-sm font-semibold text-text-1">Pedido #1024</span>
-                  <p className="text-[11px] text-text-3">Distribuidora Aurora</p>
-                </div>
-                <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-medium text-accent">Gerado</span>
-              </div>
-              <div className="space-y-2 border-t border-border pt-3">
-                {ITENS_PEDIDO_DEMO.map(({ item, embalagem, quantidade, precoFardo }) => (
-                  <div key={item} className="flex items-start justify-between gap-2 text-xs">
-                    <div className="flex items-start gap-2 text-text-2">
-                      <IconeCheck className="mt-0.5 size-3.5 shrink-0 text-accent" />
-                      <div>
-                        <div className="text-text-1">{item}</div>
-                        <div className="text-[11px] text-text-3">
-                          {embalagem} · {quantidade}x
-                        </div>
-                      </div>
-                    </div>
-                    <span className="shrink-0 tabular-nums text-text-2">{moeda(precoFardo * quantidade)}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center justify-between border-t border-border pt-3 text-sm">
-                <span className="font-medium text-text-1">Total</span>
-                <span className="font-bold tabular-nums text-accent">{moeda(TOTAL_PEDIDO_DEMO)}</span>
-              </div>
-            </div>
-            <Passo6Envelope />
-          </div>
+          <Passo6Preview />
         </div>
       )}
     </div>
