@@ -1,0 +1,53 @@
+---
+/**
+ * Marca SimpleCote — símbolo logo-unica.png + wordmark textual.
+ * Categoria A — HTML/CSS puro, zero JS.
+ * Portado de simplecote-front/src/site/BrandLogo.tsx
+ *
+ * O asset logo-unica.png foi copiado para public/logo-unica.png (tarefa 1.6).
+ */
+interface Props {
+  /** `full` = símbolo + wordmark (padrão); `mark` = só o símbolo. */
+  variant?: 'full' | 'mark'
+  class?: string
+  size?: 'sm' | 'md' | 'lg'
+  /** `claro` força o "Simple" branco — para header transparente sobre fundo escuro. */
+  tom?: 'auto' | 'claro'
+}
+
+const { variant = 'full', class: className, size = 'md', tom = 'auto' } = Astro.props
+
+const MARCA: Record<NonNullable<Props['size']>, string> = {
+  sm: 'h-7 w-7',
+  md: 'h-9 w-9',
+  lg: 'h-12 w-12',
+}
+
+const WORDMARK: Record<NonNullable<Props['size']>, string> = {
+  sm: 'text-base',
+  md: 'text-lg',
+  lg: 'text-2xl',
+}
+---
+
+{variant === 'mark' ? (
+  <span class={className}>
+    <img
+      src="/logo-unica.png"
+      alt="SimpleCote"
+      class:list={[MARCA[size!], 'shrink-0 object-contain']}
+    />
+  </span>
+) : (
+  <span class:list={['inline-flex items-center gap-2.5', className]}>
+    <img
+      src="/logo-unica.png"
+      alt="SimpleCote"
+      class:list={[MARCA[size!], 'shrink-0 object-contain']}
+    />
+    <span class:list={['font-bold tracking-tight', WORDMARK[size!]]}>
+      <span class:list={[tom === 'claro' ? 'text-white' : 'text-foreground']}>Simple</span>
+      <span style="color: var(--brand-mint, #3fae7a)">Cote</span>
+    </span>
+  </span>
+)}

@@ -1,0 +1,47 @@
+---
+/**
+ * Página Sobre nós — /sobre-nos
+ * Intuito do projeto, história (backstory) e contato ("fale aqui").
+ * COPY PENDENTE: o texto final deve ser fornecido pelo humano.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro'
+import { HeroFundo } from '../components/islands/HeroFundo'
+---
+
+<SiteLayout
+  titulo="Sobre nós — SimpleCote"
+  descricao="Conheça a história, o propósito e a equipe por trás do SimpleCote."
+>
+  <div class="relative h-full overflow-hidden">
+    <HeroFundo variant="simples" client:load />
+
+    <div class="relative z-10 flex h-full flex-col">
+      <header class="px-4 pt-8 text-center">
+        <h1 class="text-3xl font-extrabold tracking-tight text-text-1 sm:text-4xl">Sobre nós</h1>
+      </header>
+
+      <div class="mx-auto w-full max-w-3xl flex-1 min-h-0 space-y-8 overflow-y-auto px-4 pb-4 pt-6">
+        <section>
+          <h2 class="text-xl font-bold text-text-1">Nosso intuito</h2>
+          <p class="mt-2 text-text-2 leading-relaxed">
+            [Copy do intuito do projeto — pendente, a ser fornecido pelo humano]
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-text-1">Como tudo começou</h2>
+          <p class="mt-2 text-text-2 leading-relaxed">
+            [Copy da história/backstory — pendente, a ser fornecido pelo humano]
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-text-1">Fale com a gente</h2>
+          <p class="mt-2 text-text-2">
+            [Contato / "fale aqui" — pendente, a ser fornecido pelo humano]
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

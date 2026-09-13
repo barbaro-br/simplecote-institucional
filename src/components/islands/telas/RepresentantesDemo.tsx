@@ -1,0 +1,79 @@
+/**
+ * Versão React de RepresentantesDemo para uso interno no DeckHero (ilha).
+ * Portado de simplecote-front/src/site/tech/telas/RepresentantesDemo.tsx
+ */
+import { TelaCard } from './TelaCard'
+
+type Status = 'respondeu' | 'visualizou' | 'enviado'
+
+const REPRESENTANTES: { empresa: string; ramo: string; status: Status }[] = [
+  { empresa: 'Hortifruti Boa Safra', ramo: 'Hortifruti', status: 'respondeu' },
+  { empresa: 'Distribuidora Aurora', ramo: 'Mercearia', status: 'respondeu' },
+  { empresa: 'Meridiano Atacado', ramo: 'Bebidas', status: 'visualizou' },
+  { empresa: 'Rede Litoral', ramo: 'Mercearia', status: 'respondeu' },
+  { empresa: 'Frigorífico Serra', ramo: 'Carnes', status: 'enviado' },
+]
+
+// SVG paths dos ícones phosphor
+const PATHS = {
+  respondeu: 'M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z',
+  visualizou: 'M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.33,133.33,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z',
+  enviado: 'M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z',
+}
+
+const CHIP_CLASSE: Record<Status, string> = {
+  respondeu: 'text-[var(--brand-mint-bright,#6fe6a8)] bg-[var(--brand-mint,#3fae7a)]/15 ring-[var(--brand-mint,#3fae7a)]/30',
+  visualizou: 'text-amber-400 bg-amber-400/10 ring-amber-400/30',
+  enviado: 'text-white/60 bg-white/5 ring-white/15',
+}
+
+const CHIP_TEXTO: Record<Status, string> = {
+  respondeu: 'Respondeu',
+  visualizou: 'Visualizou',
+  enviado: 'Convite enviado',
+}
+
+const REENVIAR_PATH = 'M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16h28.69L188.8,72.57a80,80,0,1,0,1.67,114a8,8,0,0,1,11.16,11.46A95.95,95.95,0,0,1,128,224h-1.32A96,96,0,1,1,195.67,60.27L220,85.51V56a8,8,0,1,1,16,0Z'
+
+const responderam = REPRESENTANTES.filter((r) => r.status === 'respondeu').length
+
+export function RepresentantesDemo() {
+  return (
+    <TelaCard titulo="Representantes">
+      <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5 text-[11px] text-white/50 sm:px-5">
+        <span>Convites da cotação</span>
+        <span className="text-white/70">{responderam} de {REPRESENTANTES.length} responderam</span>
+      </div>
+      <ul className="divide-y divide-white/[0.07]">
+        {REPRESENTANTES.map(({ empresa, ramo, status }) => {
+          const pendente = status !== 'respondeu'
+          return (
+            <li key={empresa} className="flex items-center gap-3 px-4 py-3 sm:px-5">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-xs font-semibold text-white/70">
+                {empresa.slice(0, 2).toUpperCase()}
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-[13px] font-medium text-white">{empresa}</div>
+                <div className="text-[11px] text-white/40">{ramo}</div>
+              </div>
+              {pendente && (
+                <span className="hidden items-center gap-1 text-[11px] text-white/45 sm:inline-flex">
+                  <svg className="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                    <path d={REENVIAR_PATH} />
+                  </svg>
+                  reenviar
+                </span>
+              )}
+              <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ring-1 ring-inset ${CHIP_CLASSE[status]}`}>
+                <svg className="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                  <path d={PATHS[status]} />
+                </svg>
+                {CHIP_TEXTO[status]}
+              </span>
+            </li>
+          )
+        })}
+      </ul>
+    </TelaCard>
+  )
+}

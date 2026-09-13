@@ -1,0 +1,163 @@
+---
+/**
+ * Página Para Supermercados — /para-supermercados
+ * Copy 100% de openspec/changes/migrar-site-institucional-para-astro/copy-para-supermercados.md
+ * Estrutura: dor → isso te soa familiar → solução → como funciona → resultado → CTA
+ */
+import SiteLayout from '../layouts/SiteLayout.astro'
+import { HeroFundo } from '../components/islands/HeroFundo'
+import Painel from '../components/static/Painel.astro'
+import { RevealSecao } from "../components/islands/RevealSecao"
+import { ScrubText } from "../components/islands/ScrubText"
+import { SpotlightCard } from "../components/islands/SpotlightCard"
+
+const LISTA_DOR = [
+  'Você liga pra 5 fornecedores, um por um, e anota o preço numa planilha (ou no papel)',
+  'Até você terminar a rodada de ligações, os primeiros preços já podem ter mudado',
+  'Ninguém disputa ao mesmo tempo — então você nunca sabe se alguém teria oferecido menos',
+  'Toda cotação nova é recomeçar do zero, com as mesmas ligações de novo',
+]
+
+const RESULTADO = [
+  'Os fornecedores competem entre si — você não precisa negociar sozinho, item por item',
+  'Você acompanha ao vivo quem está ganhando cada item, sem precisar ficar ligando pra ninguém',
+  'No fim, os pedidos já saem prontos, separados por fornecedor, pra você só confirmar',
+]
+
+const PASSOS = [
+  { num: 1, titulo: 'Abra uma cotação', texto: 'Monte a lista de itens que você quer comprar' },
+  { num: 2, titulo: 'Convide fornecedores', texto: 'Eles recebem o link e dão o preço de cada item' },
+  { num: 3, titulo: 'Compare e economize', texto: 'A grade ao vivo mostra quem ofereceu menos; aperte e gere os pedidos' },
+]
+---
+
+<SiteLayout
+  titulo="Reduza o custo de compras do seu supermercado | SimpleCote"
+  descricao="Pare de perder dinheiro cotando fornecedor por telefone. Monte uma cotação, convide fornecedores e deixe eles disputarem o menor preço — sem planilha."
+>
+  <div class="overflow-x-clip">
+    <HeroFundo variant="simples" client:load />
+
+    <div class="relative z-10">
+      <!-- Seção 1 — Abertura (a dor) -->
+      <RevealSecao client:load  class="px-4 pb-12 pt-20">
+        <div data-reveal class="mx-auto max-w-3xl space-y-6 text-center">
+          <h1 class="text-4xl font-bold tracking-tight text-text-1 sm:text-5xl md:text-6xl">
+            <ScrubText client:visible>Pare de perder dinheiro cotando por telefone e WhatsApp</ScrubText>
+          </h1>
+          <p class="mx-auto max-w-2xl text-lg text-text-2">
+            Cada minuto que você gasta ligando pra fornecedor um por um é dinheiro saindo da margem do seu supermercado. E sem comparar todo mundo ao mesmo tempo, você nunca sabe se pagou o melhor preço possível — só o melhor preço que conseguiu perguntar.
+          </p>
+        </div>
+      </RevealSecao>
+
+      <!-- Seção 2 — "Isso te soa familiar?" -->
+      <RevealSecao client:load  class="px-4 pb-16">
+        <Painel class="p-6 sm:p-10 md:p-14">
+          <div data-reveal class="mb-8">
+            <h2 class="text-2xl font-bold tracking-tight sm:text-3xl"><ScrubText client:visible>Isso te soa familiar?</ScrubText></h2>
+          </div>
+          <ul class="space-y-4">
+            {LISTA_DOR.map((item) => (
+              <li data-reveal class="flex items-start gap-4">
+                <span class="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-2 text-text-3">
+                  <!-- X circle simplificado -->
+                  <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                    <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>
+                  </svg>
+                </span>
+                <span class="text-muted-foreground">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Painel>
+      </RevealSecao>
+
+      <!-- Seção 3 — A solução -->
+      <RevealSecao client:load  class="px-4 pb-16">
+        <div data-reveal class="mx-auto max-w-3xl space-y-4 text-center">
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+            <ScrubText client:visible>Existe um jeito de fazer isso em minutos, não em dias</ScrubText>
+          </h2>
+          <p class="text-lg text-muted-foreground">
+            SimpleCote é uma plataforma de cotação competitiva — um leilão reverso pensado pro dia a dia do supermercado. Você monta a lista de itens uma vez, convida seus fornecedores por um link, e eles disputam o menor preço de cada item, ao vivo, todos ao mesmo tempo.
+          </p>
+        </div>
+      </RevealSecao>
+
+      <!-- Seção 4 — Como funciona (resumo + link) -->
+      <RevealSecao client:load  class="px-4 pb-16">
+        <Painel class="p-6 sm:p-10 md:p-14">
+          <div data-reveal class="mb-8 text-center">
+            <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">Como funciona, em 3 passos</h2>
+          </div>
+          <ol class="space-y-6">
+            {PASSOS.map((passo) => (
+              <li data-reveal class="flex items-start gap-5">
+                <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent/15 text-lg font-bold text-accent">
+                  {passo.num}
+                </span>
+                <div>
+                  <h3 class="font-semibold">{passo.titulo}</h3>
+                  <p class="text-sm text-muted-foreground">{passo.texto}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div data-reveal class="mt-8 text-center">
+            <a
+              href="/como-funciona"
+              class="inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+            >
+              Veja o passo a passo completo
+              <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/>
+              </svg>
+            </a>
+          </div>
+        </Painel>
+      </RevealSecao>
+
+      <!-- Seção 5 — O resultado -->
+      <RevealSecao client:load  class="px-4 pb-16">
+        <div data-reveal class="mx-auto mb-8 max-w-2xl text-center">
+          <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">O resultado: preço menor, sem esforço a mais</h2>
+        </div>
+        <div class="grid gap-6 md:grid-cols-3">
+          {RESULTADO.map((texto) => (
+            <SpotlightCard client:load  class="p-6">
+              <div data-reveal class="flex items-start gap-3">
+                <svg class="mt-0.5 size-5 shrink-0 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                  <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>
+                </svg>
+                <p class="text-sm text-muted-foreground">{texto}</p>
+              </div>
+            </SpotlightCard>
+          ))}
+        </div>
+      </RevealSecao>
+
+      <!-- Seção 6 — CTA final -->
+      <RevealSecao client:load  class="px-4 pb-24">
+        <div data-reveal class="mx-auto max-w-xl text-center">
+          <h2 class="mb-4 text-3xl font-bold tracking-tight">Comece grátis, sem cartão de crédito</h2>
+          <div class="flex flex-wrap justify-center gap-3">
+            <a
+              href="https://app.simplecote.app/cadastro"
+              class="inline-flex items-center justify-center gap-1.5 rounded-md text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none h-10 px-8 bg-accent text-accent-foreground shadow hover:bg-accent/90"
+              data-cursor="mais"
+            >
+              Criar conta
+            </a>
+            <a
+              href="/precos"
+              class="inline-flex items-center justify-center gap-1.5 rounded-md text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none h-10 px-8 border border-border bg-transparent shadow-sm hover:bg-surface-2"
+            >
+              Ver planos
+            </a>
+          </div>
+        </div>
+      </RevealSecao>
+    </div>
+  </div>
+</SiteLayout>

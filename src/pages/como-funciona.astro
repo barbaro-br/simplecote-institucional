@@ -1,0 +1,82 @@
+---
+/**
+ * Página Como funciona — /como-funciona
+ * Passo a passo em auto-play (sem scroll), em tela cheia.
+ * O texto expandido dos passos ainda pode ser fornecido pelo humano.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro'
+import { HeroFundo } from '../components/islands/HeroFundo'
+import { PassosAutoPlay } from '../components/islands/PassosAutoPlay'
+import { BotaoMagnetico } from '../components/islands/BotaoMagnetico'
+
+const PASSOS = [
+  {
+    num: 1,
+    titulo: 'Crie sua conta',
+    // COPY derivada do CTA existente — revisar
+    resumo: 'Crie sua conta grátis em minutos, sem cartão de crédito, e monte sua primeira cotação.',
+  },
+  {
+    num: 2,
+    titulo: 'Abra uma cotação',
+    resumo: 'Monte a lista de itens que você quer comprar — por bipagem, busca ou importação de catálogo.',
+  },
+  {
+    num: 3,
+    titulo: 'Convide representantes',
+    resumo: 'Seus fornecedores recebem o link por e-mail ou WhatsApp e dão o preço de cada item.',
+  },
+  {
+    num: 4,
+    titulo: 'Acompanhe as respostas',
+    // COPY derivada do slide "Representantes" do DeckHero — revisar
+    resumo: 'Veja quem abriu e quem respondeu o convite, e reenvie com um clique.',
+  },
+  {
+    num: 5,
+    titulo: 'Compare e economize',
+    resumo: 'A grade ao vivo mostra quem ofereceu menos em cada item. Tudo atualiza na mesma hora em uma única tela.',
+  },
+  {
+    num: 6,
+    titulo: 'Feche os pedidos',
+    resumo: 'Aperte um botão e o sistema gera automaticamente os pedidos de compra com os vencedores.',
+  },
+] as const
+---
+
+<SiteLayout
+  titulo="Como funciona a cotação competitiva | SimpleCote"
+  descricao="Entenda como o SimpleCote funciona: abra uma cotação, convide fornecedores e deixe eles disputarem o menor preço de cada item ao vivo."
+>
+  <div class="relative h-full overflow-hidden">
+    <HeroFundo variant="simples" client:load />
+
+    <div class="relative z-10 flex h-full flex-col">
+      <!-- Intro -->
+      <header class="mx-auto w-full max-w-2xl px-4 pt-10 text-center">
+        <h1 class="text-4xl font-extrabold tracking-tight text-text-1 sm:text-5xl">
+          Como funciona o leilão reverso
+        </h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg text-text-2 leading-relaxed">
+          Em vez de ligar pra cada fornecedor, você abre uma cotação e eles disputam o menor preço de cada item — todos ao mesmo tempo, ao vivo.
+        </p>
+        <div class="mt-6 flex justify-center">
+          <BotaoMagnetico client:load
+            as="a"
+            href="https://app.simplecote.app/cadastro"
+            className="inline-flex items-center justify-center gap-1.5 rounded-md text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 h-10 px-8 bg-accent text-accent-foreground shadow hover:bg-accent/90"
+            data-cursor="mais"
+          >
+            Criar conta
+          </BotaoMagnetico>
+        </div>
+      </header>
+
+      <!-- Passos em auto-play -->
+      <div class="mx-auto w-full max-w-6xl flex-1 min-h-0">
+        <PassosAutoPlay client:load passos={PASSOS} />
+      </div>
+    </div>
+  </div>
+</SiteLayout>

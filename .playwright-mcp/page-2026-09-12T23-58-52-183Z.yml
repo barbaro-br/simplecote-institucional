@@ -1,0 +1,52 @@
+- generic [active] [ref=f27e1]:
+  - generic [ref=f27e2]:
+    - generic [aria-hidden]:
+      - generic: +
+  - banner [ref=f27e3]:
+    - generic [ref=f27e4]:
+      - link "SimpleCote — página inicial" [ref=f27e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f27e6]:
+          - img "SimpleCote" [ref=f27e7]
+          - generic [ref=f27e8]: SimpleCote
+      - generic [ref=f27e9]:
+        - navigation "Navegação principal" [ref=f27e10]:
+          - link "Home" [ref=f27e11] [cursor=pointer]:
+            - /url: /
+          - link "Como funciona" [ref=f27e12] [cursor=pointer]:
+            - /url: /como-funciona
+          - link "Preços" [ref=f27e13] [cursor=pointer]:
+            - /url: /precos
+          - link "Ajuda" [ref=f27e14] [cursor=pointer]:
+            - /url: /ajuda
+          - link "Sobre nós" [ref=f27e15] [cursor=pointer]:
+            - /url: /sobre-nos
+          - link "Entrar" [ref=f27e16] [cursor=pointer]:
+            - /url: https://app.simplecote.app/login
+        - link "Criar conta" [ref=f27e18] [cursor=pointer]:
+          - /url: https://app.simplecote.app/cadastro
+  - main [ref=f27e19]:
+    - generic [ref=f27e22]:
+      - generic [ref=f27e23]:
+        - heading "Central de ajuda" [level=1] [ref=f27e24]
+        - paragraph [ref=f27e25]: Perguntas frequentes sobre como usar o SimpleCote.
+      - generic [ref=f27e28]:
+        - button [ref=f27e30]:
+          - heading "Como criar uma nova cotação?" [level=3] [ref=f27e31]
+        - button [ref=f27e36]:
+          - heading "Como convidar representantes?" [level=3] [ref=f27e37]
+        - button [ref=f27e42]:
+          - heading "Como apurar uma cotação e gerar pedidos?" [level=3] [ref=f27e43]
+        - button [ref=f27e48]:
+          - heading "Como cancelar uma cotação?" [level=3] [ref=f27e49]
+  - generic [ref=f27e56]:
+    - generic [ref=f27e58]:
+      - generic [ref=f27e59]: Sem fidelidade
+      - generic [ref=f27e61]: Cancele quando quiser
+      - generic [ref=f27e63]: Suporte em português
+      - generic [ref=f27e65]: Grade ao vivo em todos os planos
+    - generic [ref=f27e68]:
+      - generic [ref=f27e69]: Sem fidelidade
+      - generic [ref=f27e71]: Cancele quando quiser
+      - generic [ref=f27e73]: Suporte em português
+      - generic [ref=f27e75]: Grade ao vivo em todos os planos

@@ -1,0 +1,20 @@
+---
+/**
+ * Painel glass das seções do site — conteúdo legível por cima do fundo de marca fixo.
+ * Categoria A — HTML/CSS puro, zero JS.
+ * Portado de simplecote-front/src/site/tech/Painel.tsx
+ */
+interface Props {
+  class?: string
+}
+const { class: className } = Astro.props
+---
+
+<div
+  class:list={[
+    'mx-auto w-full max-w-6xl rounded-3xl border border-white/10 bg-background/70 backdrop-blur-sm md:backdrop-blur-2xl',
+    className,
+  ]}
+>
+  <slot />
+</div>

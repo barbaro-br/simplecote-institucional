@@ -31,18 +31,18 @@ Cada arquivo abaixo já foi lido e classificado. Um agente implementando as tare
 | `tech/Painel.tsx` | A | Só wrapper de layout, sem estado |
 | `tech/EmbedYouTube.tsx` | A | Wrapper de iframe, sem estado |
 | `BrandLogo.tsx` | A | Só imagem/SVG |
-| `tech/BorderBeam.tsx` | B (CSS/JS sem React) | Só lê `useDeveAnimar` (checagem de `prefers-reduced-motion`), sem estado próprio |
-| `tech/Marquee.tsx` | B | Idem |
-| `tech/GridAnimado.tsx` | B | Idem |
-| `tech/TextoGradiente.tsx` | B | Idem |
-| `tech/CardTilt.tsx` | B | `motion/react` só pra seguir o mouse com física de mola — refazível com `pointermove` + CSS |
-| `tech/CursorMais.tsx` | B | Idem |
-| `tech/BotaoMagnetico.tsx` | B | Idem |
-| `tech/SpotlightCard.tsx` | B | Idem |
-| `tech/RevealSecao.tsx` | B | GSAP puro (`gsap-scroll.ts`) — já é framework-agnostic, só muda de onde é chamado |
-| `tech/gsap-scroll.ts` | B (utilitário) | Copiar como está, é vanilla GSAP |
-| `tech/useReduzirMovimento.ts` | B (utilitário) | Vira uma função/checagem simples de `prefers-reduced-motion`, sem precisar ser hook React |
-| `tech/useViewportLarga.ts` | B (utilitário) | Idem, checagem de largura de viewport |
+| `tech/BorderBeam.tsx` | **C (ilha React)** | Efeito complexo. Mantido como React original para fidelidade. |
+| `tech/Marquee.tsx` | **C (ilha React)** | Idem. |
+| `tech/GridAnimado.tsx` | **C (ilha React)** | Idem. |
+| `tech/TextoGradiente.tsx` | **C (ilha React)** | Idem. |
+| `tech/CardTilt.tsx` | **C (ilha React)** | Usa `motion/react`. Mantido em React para idêntica física de mola. |
+| `tech/CursorMais.tsx` | **C (ilha React)** | Idem. |
+| `tech/BotaoMagnetico.tsx` | **C (ilha React)** | Idem. |
+| `tech/SpotlightCard.tsx` | **C (ilha React)** | Idem. |
+| `tech/RevealSecao.tsx` | **C (ilha React)** | GSAP com React. Mantido para evitar refatoração com perda visual. |
+| `tech/gsap-scroll.ts` | **C (suporte)** | Utilitário usado pelas ilhas de GSAP. |
+| `tech/useReduzirMovimento.ts` | **C (suporte)** | Hook React original mantido para as ilhas. |
+| `tech/useViewportLarga.ts` | **C (suporte)** | Idem. |
 | `tech/DeckHero.tsx` | **C (ilha React)** | `useState`/`useEffect` de verdade: troca de slide, teclado, swipe, pausa. `client:load` (é o hero, primeiro conteúdo visível) |
 | `tech/GradeAoVivoDemo.tsx` | **C** (dentro da ilha do DeckHero) | `useState`/timer simulando preço mudando — não precisa de ilha própria, é renderizado pelo `DeckHero` |
 | `HeroFundo.tsx` | **C (ilha React)** | `useState` (detecção de WebGL, fallback de erro) + Error Boundary (feature de React) — `client:load`, é o fundo fixo da página inteira |

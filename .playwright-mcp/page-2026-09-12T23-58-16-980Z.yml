@@ -1,0 +1,331 @@
+- generic [active] [ref=f23e1]:
+  - banner [ref=f23e2]:
+    - generic [ref=f23e3]:
+      - link "SimpleCote — página inicial" [ref=f23e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f23e5]:
+          - img "SimpleCote" [ref=f23e6]
+          - generic [ref=f23e7]: SimpleCote
+      - generic [ref=f23e8]:
+        - navigation "Navegação principal" [ref=f23e9]:
+          - link "Home" [ref=f23e10] [cursor=pointer]:
+            - /url: /
+          - link "Como funciona" [ref=f23e11] [cursor=pointer]:
+            - /url: /como-funciona
+          - link "Preços" [ref=f23e12] [cursor=pointer]:
+            - /url: /precos
+          - link "Ajuda" [ref=f23e13] [cursor=pointer]:
+            - /url: /ajuda
+          - link "Sobre nós" [ref=f23e14] [cursor=pointer]:
+            - /url: /sobre-nos
+          - link "Entrar" [ref=f23e15] [cursor=pointer]:
+            - /url: https://app.simplecote.app/login
+        - link "Criar conta" [ref=f23e17] [cursor=pointer]:
+          - /url: https://app.simplecote.app/cadastro
+  - main [ref=f23e18]:
+    - region "Tour do SimpleCote" [ref=f23e23]:
+      - generic [ref=f23e25]:
+        - group "1 de 6 — Início" [ref=f23e26]:
+          - generic [ref=f23e28]:
+            - generic [ref=f23e29]: Leilão reverso para supermercados
+            - heading "Cotações competitivas, sem planilha." [level=1] [ref=f23e32]
+            - paragraph [ref=f23e33]: Você abre a cotação, os fornecedores disputam preço item a item e você economiza em cada compra — com a grade ao vivo mostrando tudo em tempo real.
+            - generic [ref=f23e34]:
+              - link "Criar conta" [ref=f23e36] [cursor=pointer]:
+                - /url: https://app.simplecote.app/cadastro
+              - link "Entrar" [ref=f23e38] [cursor=pointer]:
+                - /url: https://app.simplecote.app/login
+        - group [aria-hidden] [ref=f23e39]:
+          - generic [ref=f23e41]:
+            - generic [ref=f23e43]:
+              - heading [level=2] [ref=f23e44]: Preço disputado item a item
+              - paragraph [ref=f23e45]: Cada fornecedor cobre o menor lance da embalagem. A grade ao vivo mostra quem está ganhando cada item — sem você atualizar nada.
+            - generic [ref=f23e48]:
+              - generic [ref=f23e49]:
+                - generic [ref=f23e50]: Grade ao vivo
+                - generic [ref=f23e54]: Simulação
+              - table [ref=f23e57]:
+                - rowgroup [ref=f23e58]:
+                  - row [ref=f23e59]:
+                    - columnheader [ref=f23e60]: Item
+                    - columnheader [ref=f23e61]: Aurora
+                    - columnheader [ref=f23e62]: Meridiano
+                    - columnheader [ref=f23e63]: Litoral
+                - rowgroup [ref=f23e64]:
+                  - row [ref=f23e65]:
+                    - cell [ref=f23e66]:
+                      - generic [ref=f23e67]: Arroz tipo 1
+                      - generic [ref=f23e68]: Fardo c/ 6 · 5 kg
+                      - generic [ref=f23e69]: 7896 0067 11234
+                    - cell [ref=f23e70]:
+                      - generic [ref=f23e71]:
+                        - generic [ref=f23e72]: R$ 179,40
+                        - generic [ref=f23e73]: R$ 29,90/un
+                    - cell [ref=f23e74]:
+                      - generic [ref=f23e75]:
+                        - generic [ref=f23e76]: R$ 174,00
+                        - generic [ref=f23e79]: R$ 29,00/un
+                    - cell [ref=f23e80]:
+                      - generic [ref=f23e81]:
+                        - generic [ref=f23e82]: R$ 185,40
+                        - generic [ref=f23e83]: R$ 30,90/un
+                  - row [ref=f23e84]:
+                    - cell [ref=f23e85]:
+                      - generic [ref=f23e86]: Feijão carioca
+                      - generic [ref=f23e87]: Fardo c/ 10 · 1 kg
+                      - generic [ref=f23e88]: 7891 2345 00018
+                    - cell [ref=f23e89]:
+                      - generic [ref=f23e90]:
+                        - generic [ref=f23e91]: R$ 84,00
+                        - generic [ref=f23e92]: R$ 8,40/un
+                    - cell [ref=f23e93]:
+                      - generic [ref=f23e94]:
+                        - generic [ref=f23e95]: R$ 87,00
+                        - generic [ref=f23e96]: R$ 8,70/un
+                    - cell [ref=f23e97]:
+                      - generic [ref=f23e98]:
+                        - generic [ref=f23e99]: R$ 82,00
+                        - generic [ref=f23e102]: R$ 8,20/un
+                  - row [ref=f23e103]:
+                    - cell [ref=f23e104]:
+                      - generic [ref=f23e105]: Óleo de soja
+                      - generic [ref=f23e106]: Caixa c/ 20 · 900 ml
+                      - generic [ref=f23e107]: 7891 1071 01235
+                    - cell [ref=f23e108]:
+                      - generic [ref=f23e109]:
+                        - generic [ref=f23e110]: R$ 142,00
+                        - generic [ref=f23e111]: R$ 7,10/un
+                    - cell [ref=f23e112]:
+                      - generic [ref=f23e113]:
+                        - generic [ref=f23e114]: R$ 138,00
+                        - generic [ref=f23e117]: R$ 6,90/un
+                    - cell [ref=f23e118]:
+                      - generic [ref=f23e119]:
+                        - generic [ref=f23e120]: R$ 148,00
+                        - generic [ref=f23e121]: R$ 7,40/un
+                  - row [ref=f23e122]:
+                    - cell [ref=f23e123]:
+                      - generic [ref=f23e124]: Açúcar refinado
+                      - generic [ref=f23e125]: Fardo c/ 10 · 1 kg
+                      - generic [ref=f23e126]: 7896 0159 12346
+                    - cell [ref=f23e127]:
+                      - generic [ref=f23e128]:
+                        - generic [ref=f23e129]: R$ 58,00
+                        - generic [ref=f23e130]: R$ 5,80/un
+                    - cell [ref=f23e131]:
+                      - generic [ref=f23e132]:
+                        - generic [ref=f23e133]: R$ 60,50
+                        - generic [ref=f23e134]: R$ 6,05/un
+                    - cell [ref=f23e135]:
+                      - generic [ref=f23e136]:
+                        - generic [ref=f23e137]: R$ 56,50
+                        - generic [ref=f23e140]: R$ 5,65/un
+                  - row [ref=f23e141]:
+                    - cell [ref=f23e142]:
+                      - generic [ref=f23e143]: Café torrado
+                      - generic [ref=f23e144]: Fardo c/ 10 · 500 g
+                      - generic [ref=f23e145]: 7896 0052 13457
+                    - cell [ref=f23e146]:
+                      - generic [ref=f23e147]:
+                        - generic [ref=f23e148]: R$ 168,00
+                        - generic [ref=f23e149]: R$ 16,80/un
+                    - cell [ref=f23e150]:
+                      - generic [ref=f23e151]:
+                        - generic [ref=f23e152]: R$ 159,00
+                        - generic [ref=f23e155]: R$ 15,90/un
+                    - cell [ref=f23e156]:
+                      - generic [ref=f23e157]:
+                        - generic [ref=f23e158]: R$ 164,00
+                        - generic [ref=f23e159]: R$ 16,40/un
+              - generic [ref=f23e160]:
+                - generic [ref=f23e161]: Economia projetada nesta cotação
+                - generic [ref=f23e162]: R$ 0,00/ mês
+        - group [aria-hidden] [ref=f23e163]:
+          - generic [ref=f23e165]:
+            - generic [ref=f23e167]:
+              - heading [level=2] [ref=f23e168]: Convide por link, acompanhe a resposta
+              - paragraph [ref=f23e169]: O fornecedor recebe o convite por e-mail ou WhatsApp e responde pelo link. Você vê quem abriu, quem respondeu e reenvia com um clique.
+            - generic [ref=f23e172]:
+              - generic [ref=f23e173]:
+                - generic [ref=f23e174]: Representantes
+                - generic [ref=f23e178]: Simulação
+              - generic [ref=f23e180]:
+                - generic [ref=f23e181]: Convites da cotação
+                - generic [ref=f23e182]: 3 de 5 responderam
+              - list [ref=f23e183]:
+                - listitem [ref=f23e184]:
+                  - generic [ref=f23e185]: HO
+                  - generic [ref=f23e186]:
+                    - generic [ref=f23e187]: Hortifruti Boa Safra
+                    - generic [ref=f23e188]: Hortifruti
+                  - generic [ref=f23e189]: Respondeu
+                - listitem [ref=f23e192]:
+                  - generic [ref=f23e193]: DI
+                  - generic [ref=f23e194]:
+                    - generic [ref=f23e195]: Distribuidora Aurora
+                    - generic [ref=f23e196]: Mercearia
+                  - generic [ref=f23e197]: Respondeu
+                - listitem [ref=f23e200]:
+                  - generic [ref=f23e201]: ME
+                  - generic [ref=f23e202]:
+                    - generic [ref=f23e203]: Meridiano Atacado
+                    - generic [ref=f23e204]: Bebidas
+                  - generic [ref=f23e205]: reenviar
+                  - generic [ref=f23e208]: Visualizou
+                - listitem [ref=f23e211]:
+                  - generic [ref=f23e212]: RE
+                  - generic [ref=f23e213]:
+                    - generic [ref=f23e214]: Rede Litoral
+                    - generic [ref=f23e215]: Mercearia
+                  - generic [ref=f23e216]: Respondeu
+                - listitem [ref=f23e219]:
+                  - generic [ref=f23e220]: FR
+                  - generic [ref=f23e221]:
+                    - generic [ref=f23e222]: Frigorífico Serra
+                    - generic [ref=f23e223]: Carnes
+                  - generic [ref=f23e224]: reenviar
+                  - generic [ref=f23e227]: Convite enviado
+        - group [aria-hidden] [ref=f23e230]:
+          - generic [ref=f23e232]:
+            - generic [ref=f23e234]:
+              - heading [level=2] [ref=f23e235]: Seus fornecedores, organizados por ramo
+              - paragraph [ref=f23e236]: "Cadastre uma vez e monte cotações direcionadas: convide só quem fornece hortifruti, bebidas, carnes — o que a cotação pedir."
+            - generic [ref=f23e239]:
+              - generic [ref=f23e240]:
+                - generic [ref=f23e241]: Empresas
+                - generic [ref=f23e245]: Simulação
+              - generic [ref=f23e247]:
+                - generic [ref=f23e248]: Fornecedores cadastrados
+                - generic [ref=f23e249]: 6 · 5 ramos
+              - generic [ref=f23e250]:
+                - generic [ref=f23e251]: Hortifruti
+                - generic [ref=f23e252]: Mercearia
+                - generic [ref=f23e253]: Bebidas
+                - generic [ref=f23e254]: Carnes
+                - generic [ref=f23e255]: Limpeza
+              - list [ref=f23e256]:
+                - listitem [ref=f23e257]:
+                  - generic [ref=f23e258]: HO
+                  - generic [ref=f23e259]:
+                    - generic [ref=f23e260]: Hortifruti Boa Safra
+                    - generic [ref=f23e261]: Hortifruti
+                  - generic [ref=f23e262]: (38) 9 9911-2200
+                - listitem [ref=f23e265]:
+                  - generic [ref=f23e266]: DI
+                  - generic [ref=f23e267]:
+                    - generic [ref=f23e268]: Distribuidora Aurora
+                    - generic [ref=f23e269]: Mercearia
+                  - generic [ref=f23e270]: (11) 9 8123-4455
+                - listitem [ref=f23e273]:
+                  - generic [ref=f23e274]: ME
+                  - generic [ref=f23e275]:
+                    - generic [ref=f23e276]: Meridiano Atacado
+                    - generic [ref=f23e277]: Bebidas
+                  - generic [ref=f23e278]: (31) 9 9740-1188
+                - listitem [ref=f23e281]:
+                  - generic [ref=f23e282]: RE
+                  - generic [ref=f23e283]:
+                    - generic [ref=f23e284]: Rede Litoral
+                    - generic [ref=f23e285]: Mercearia
+                  - generic [ref=f23e286]: (27) 9 9666-0432
+                - listitem [ref=f23e289]:
+                  - generic [ref=f23e290]: FR
+                  - generic [ref=f23e291]:
+                    - generic [ref=f23e292]: Frigorífico Serra
+                    - generic [ref=f23e293]: Carnes
+                  - generic [ref=f23e294]: (34) 9 9502-7781
+                - listitem [ref=f23e297]:
+                  - generic [ref=f23e298]: CL
+                  - generic [ref=f23e299]:
+                    - generic [ref=f23e300]: CleanMax Suprimentos
+                    - generic [ref=f23e301]: Limpeza
+                  - generic [ref=f23e302]: (11) 9 9333-1290
+        - group [aria-hidden] [ref=f23e305]:
+          - generic [ref=f23e307]:
+            - generic [ref=f23e309]:
+              - heading [level=2] [ref=f23e310]: No fim, o vencedor de cada item
+              - paragraph [ref=f23e311]: O SimpleCote apura a cotação, mostra quanto você economizou e gera os pedidos já separados por fornecedor.
+            - generic [ref=f23e314]:
+              - generic [ref=f23e315]:
+                - generic [ref=f23e316]: Resultado da cotação
+                - generic [ref=f23e320]: Simulação
+              - generic [ref=f23e322]:
+                - generic [ref=f23e323]: Vencedor de cada item
+                - generic [ref=f23e324]: 5 itens · 3 fornecedores
+              - list [ref=f23e325]:
+                - listitem [ref=f23e326]:
+                  - generic [ref=f23e327]:
+                    - generic [ref=f23e328]: Arroz tipo 1
+                    - generic [ref=f23e329]: Meridiano
+                  - generic [ref=f23e332]:
+                    - generic [ref=f23e333]: R$ 152,40
+                    - generic [ref=f23e334]: −R$ 21,60
+                - listitem [ref=f23e335]:
+                  - generic [ref=f23e336]:
+                    - generic [ref=f23e337]: Feijão carioca
+                    - generic [ref=f23e338]: Litoral
+                  - generic [ref=f23e341]:
+                    - generic [ref=f23e342]: R$ 74,20
+                    - generic [ref=f23e343]: −R$ 7,80
+                - listitem [ref=f23e344]:
+                  - generic [ref=f23e345]:
+                    - generic [ref=f23e346]: Óleo de soja
+                    - generic [ref=f23e347]: Meridiano
+                  - generic [ref=f23e350]:
+                    - generic [ref=f23e351]: R$ 128,90
+                    - generic [ref=f23e352]: −R$ 13,10
+                - listitem [ref=f23e353]:
+                  - generic [ref=f23e354]:
+                    - generic [ref=f23e355]: Açúcar refinado
+                    - generic [ref=f23e356]: Aurora
+                  - generic [ref=f23e359]:
+                    - generic [ref=f23e360]: R$ 49,60
+                    - generic [ref=f23e361]: −R$ 6,90
+                - listitem [ref=f23e362]:
+                  - generic [ref=f23e363]:
+                    - generic [ref=f23e364]: Café torrado
+                    - generic [ref=f23e365]: Litoral
+                  - generic [ref=f23e368]:
+                    - generic [ref=f23e369]: R$ 138,40
+                    - generic [ref=f23e370]: −R$ 20,60
+              - generic [ref=f23e371]:
+                - generic [ref=f23e372]:
+                  - generic [ref=f23e373]: Economia total nesta cotação
+                  - generic [ref=f23e374]: R$ 70,00
+                - generic [ref=f23e375]: Gerar pedidos
+        - group [aria-hidden] [ref=f23e376]:
+          - generic [ref=f23e378]:
+            - heading [level=2] [ref=f23e379]: Comece grátis
+            - paragraph [ref=f23e380]: Crie sua conta em minutos, monte a primeira cotação e veja o produto funcionando — sem cartão de crédito.
+            - list [ref=f23e381]:
+              - listitem [ref=f23e382]: Teste grátis
+              - listitem [ref=f23e385]: Sem cartão
+              - listitem [ref=f23e388]: Cancele quando quiser
+            - link [ref=f23e392] [cursor=pointer]:
+              - /url: https://app.simplecote.app/cadastro
+              - text: Criar conta
+      - generic [ref=f23e393]:
+        - 'button "Ir para o slide 1: Início" [ref=f23e394] [cursor=pointer]'
+        - 'button "Ir para o slide 2: Grade ao vivo" [ref=f23e397] [cursor=pointer]'
+        - 'button "Ir para o slide 3: Representantes" [ref=f23e399] [cursor=pointer]'
+        - 'button "Ir para o slide 4: Empresas" [ref=f23e401] [cursor=pointer]'
+        - 'button "Ir para o slide 5: Resultado" [ref=f23e403] [cursor=pointer]'
+        - 'button "Ir para o slide 6: Começar" [ref=f23e405] [cursor=pointer]'
+      - generic [ref=f23e407]:
+        - button "Slide anterior" [ref=f23e408]
+        - button "Pausar apresentação" [ref=f23e411]
+        - button "Próximo slide" [ref=f23e414]
+      - paragraph [ref=f23e417]: "Slide 1 de 6: Início"
+      - link "Planos e detalhes" [ref=f23e418] [cursor=pointer]:
+        - /url: /como-funciona
+  - generic [ref=f23e424]:
+    - generic [ref=f23e426]:
+      - generic [ref=f23e427]: Sem fidelidade
+      - generic [ref=f23e429]: Cancele quando quiser
+      - generic [ref=f23e431]: Suporte em português
+      - generic [ref=f23e433]: Grade ao vivo em todos os planos
+    - generic [ref=f23e436]:
+      - generic [ref=f23e437]: Sem fidelidade
+      - generic [ref=f23e439]: Cancele quando quiser
+      - generic [ref=f23e441]: Suporte em português
+      - generic [ref=f23e443]: Grade ao vivo em todos os planos

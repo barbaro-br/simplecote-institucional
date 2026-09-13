@@ -1,16 +1,24 @@
 ---
+/**
+ * Página Home — /
+ * Shell em tela cheia: apenas o hero em formato "stories" (DeckHero).
+ * As seções "Como funciona" e "Planos" têm páginas próprias (acessíveis pelo header).
+ */
 import SiteLayout from '../layouts/SiteLayout.astro'
+import { HeroFundo } from '../components/islands/HeroFundo'
+import { DeckHero } from '../components/islands/DeckHero'
 ---
 
 <SiteLayout
-	titulo="SimpleCote — Cotações competitivas para supermercados"
-	descricao="SimpleCote: leilão reverso para supermercados cotarem e economizarem com fornecedores, sem planilha."
+  titulo="SimpleCote — Cotações competitivas para supermercados"
+  descricao="SimpleCote: leilão reverso para supermercados cotarem e economizarem com fornecedores, sem planilha."
+  ogImage="/hero.png"
 >
-	<main class="mx-auto max-w-3xl px-4 py-24 text-center">
-		<h1 class="text-4xl font-bold tracking-tight">SimpleCote</h1>
-		<p class="mt-4 text-lg text-neutral-600">
-			Cotações competitivas para supermercados. Projeto Astro em construção —
-			próximo passo: trazer o conteúdo real da home atual.
-		</p>
-	</main>
+  <div class="relative h-full overflow-hidden">
+    <HeroFundo client:load />
+
+    <div class="relative z-10 h-full">
+      <DeckHero client:load />
+    </div>
+  </div>
 </SiteLayout>

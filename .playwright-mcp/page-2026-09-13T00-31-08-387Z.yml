@@ -1,0 +1,86 @@
+- generic [active] [ref=f108e1]:
+  - banner [ref=f108e2]:
+    - generic [ref=f108e3]:
+      - link "SimpleCote — página inicial" [ref=f108e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f108e5]:
+          - img "SimpleCote" [ref=f108e6]
+          - generic [ref=f108e7]: SimpleCote
+      - generic [ref=f108e8]:
+        - navigation "Navegação principal" [ref=f108e9]:
+          - link "Home" [ref=f108e10] [cursor=pointer]:
+            - /url: /
+          - link "Como funciona" [ref=f108e11] [cursor=pointer]:
+            - /url: /como-funciona
+          - link "Preços" [ref=f108e12] [cursor=pointer]:
+            - /url: /precos
+          - link "Ajuda" [ref=f108e13] [cursor=pointer]:
+            - /url: /ajuda
+          - link "Sobre nós" [ref=f108e14] [cursor=pointer]:
+            - /url: /sobre-nos
+          - link "Entrar" [ref=f108e15] [cursor=pointer]:
+            - /url: https://app.simplecote.app/login
+        - link "Criar conta" [ref=f108e17] [cursor=pointer]:
+          - /url: https://app.simplecote.app/cadastro
+        - button "Ativar modo apresentação" [ref=f108e18]
+  - main [ref=f108e21]:
+    - generic [ref=f108e24]:
+      - generic [ref=f108e25]:
+        - heading "Planos e preços" [level=1] [ref=f108e26]
+        - paragraph [ref=f108e27]: Comece grátis e evolua quando o volume pedir. Sem fidelidade, sem cartão para testar.
+      - generic [ref=f108e29]:
+        - generic [ref=f108e37]:
+          - heading "Teste grátis" [level=2] [ref=f108e38]
+          - paragraph [ref=f108e39]: Para experimentar o SimpleCote sem compromisso.
+          - generic [ref=f108e40]: Grátis
+          - list [ref=f108e43]:
+            - listitem [ref=f108e44]:
+              - generic [ref=f108e47]: "Cotações por mês: 5"
+            - listitem [ref=f108e48]:
+              - generic [ref=f108e51]: "Usuários: 2"
+            - listitem [ref=f108e52]:
+              - generic [ref=f108e55]: "Representantes: 10"
+          - link "Começar agora" [ref=f108e58] [cursor=pointer]:
+            - /url: https://app.simplecote.app/cadastro
+        - generic [ref=f108e66]:
+          - generic [ref=f108e67]: Mais popular
+          - heading "Essencial" [level=2] [ref=f108e68]
+          - paragraph [ref=f108e69]: Para supermercados que querem cotar com regularidade.
+          - generic [ref=f108e70]:
+            - generic [ref=f108e71]: R$ 149,00
+            - generic [ref=f108e72]: /mês
+          - list [ref=f108e74]:
+            - listitem [ref=f108e75]:
+              - generic [ref=f108e78]: "Cotações por mês: 100"
+            - listitem [ref=f108e79]:
+              - generic [ref=f108e82]: "Usuários: 10"
+            - listitem [ref=f108e83]:
+              - generic [ref=f108e86]: "Representantes: 200"
+          - link "Começar agora" [ref=f108e89] [cursor=pointer]:
+            - /url: https://app.simplecote.app/cadastro
+        - generic [ref=f108e98]:
+          - heading "Profissional" [level=2] [ref=f108e99]
+          - paragraph [ref=f108e100]: Para operações maiores, com volume e equipe dedicados.
+          - generic [ref=f108e101]:
+            - generic [ref=f108e102]: R$ 299,00
+            - generic [ref=f108e103]: /mês
+          - list [ref=f108e105]:
+            - listitem [ref=f108e106]:
+              - generic [ref=f108e109]: "Cotações por mês: Ilimitado"
+            - listitem [ref=f108e110]:
+              - generic [ref=f108e113]: "Usuários: Ilimitado"
+            - listitem [ref=f108e114]:
+              - generic [ref=f108e117]: "Representantes: Ilimitado"
+          - link "Começar agora" [ref=f108e120] [cursor=pointer]:
+            - /url: https://app.simplecote.app/cadastro
+  - generic [ref=f108e124]:
+    - generic [ref=f108e126]:
+      - generic [ref=f108e127]: Sem fidelidade
+      - generic [ref=f108e129]: Cancele quando quiser
+      - generic [ref=f108e131]: Suporte em português
+      - generic [ref=f108e133]: Grade ao vivo em todos os planos
+    - generic [ref=f108e136]:
+      - generic [ref=f108e137]: Sem fidelidade
+      - generic [ref=f108e139]: Cancele quando quiser
+      - generic [ref=f108e141]: Suporte em português
+      - generic [ref=f108e143]: Grade ao vivo em todos os planos

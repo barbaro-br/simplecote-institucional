@@ -1,0 +1,32 @@
+---
+/**
+ * Página Ajuda — /ajuda
+ * Tela cheia (sem scroll): FAQ em accordion com scroll interno no painel.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro'
+import { HeroFundo } from '../components/islands/HeroFundo'
+import { PERGUNTAS_FREQUENTES } from '../data/faq'
+import { FaqComVideo } from '../components/islands/FaqComVideo'
+---
+
+<SiteLayout
+  titulo="Central de ajuda — SimpleCote"
+  descricao="Perguntas frequentes sobre como usar o SimpleCote."
+>
+  <div class="relative h-full overflow-hidden">
+    <HeroFundo variant="simples" client:load />
+
+    <div class="relative z-10 flex h-full flex-col">
+      <header class="px-4 pt-8 text-center">
+        <h1 class="text-3xl font-extrabold tracking-tight text-text-1 sm:text-4xl">Central de ajuda</h1>
+        <p class="mx-auto mt-2 max-w-xl text-sm text-text-2 sm:text-base">
+          Perguntas frequentes sobre como usar o SimpleCote.
+        </p>
+      </header>
+
+      <div class="mx-auto w-full max-w-5xl flex-1 min-h-0 px-4 pb-4">
+        <FaqComVideo client:load perguntas={PERGUNTAS_FREQUENTES} />
+      </div>
+    </div>
+  </div>
+</SiteLayout>

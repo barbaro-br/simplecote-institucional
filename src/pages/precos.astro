@@ -1,0 +1,97 @@
+---
+/**
+ * Página Preços — /precos
+ * Tela cheia (sem scroll): hero compacto + grade de 3 planos.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro'
+import { HeroFundo } from '../components/islands/HeroFundo'
+import { SpotlightCard } from "../components/islands/SpotlightCard"
+import { CardTilt } from "../components/islands/CardTilt"
+import { BorderBeam } from "../components/islands/BorderBeam"
+import { PLANOS } from '../data/planos'
+import { BotaoMagnetico } from '../components/islands/BotaoMagnetico'
+
+function moeda(valor: number): string {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor)
+}
+---
+
+<SiteLayout
+  titulo="Preços — SimpleCote"
+  descricao="Conheça os planos do SimpleCote e escolha o ideal para o seu supermercado."
+>
+  <div class="relative h-full overflow-hidden">
+    <HeroFundo variant="simples" client:load />
+
+    <div class="relative z-10 flex h-full flex-col">
+      <header class="px-4 pt-8 text-center">
+        <h1 class="text-3xl font-extrabold tracking-tight text-text-1 sm:text-4xl">Planos e preços</h1>
+        <p class="mx-auto mt-2 max-w-xl text-sm text-text-2 sm:text-base">
+          Comece grátis e evolua quando o volume pedir. Sem fidelidade, sem cartão para testar.
+        </p>
+      </header>
+
+      <div class="mx-auto flex w-full max-w-6xl flex-1 min-h-0 items-center px-4 pb-4">
+        <div class="grid w-full items-center gap-4 md:grid-cols-3 md:gap-6">
+          {PLANOS.map((plano) => (
+            <div class={plano.destaque ? 'relative h-full md:scale-105 z-10' : 'h-full'}>
+              <CardTilt client:load class="h-full">
+                <SpotlightCard client:load
+                  className={plano.destaque ? 'flex h-full flex-col p-7 border-transparent bg-bg-deep/95 shadow-glow backdrop-blur-xl rounded-2xl transition-transform duration-300 hover:-translate-y-1' : 'flex h-full flex-col p-7 border-border bg-surface-2 backdrop-blur-md rounded-2xl transition-transform duration-300 hover:-translate-y-1'}
+                >
+                  {plano.destaque && (
+                    <div class="mb-3 self-start rounded-full bg-accent px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent-foreground">
+                      Mais popular
+                    </div>
+                  )}
+
+                  <h2 class="text-lg font-bold text-text-1">{plano.nome}</h2>
+                  <p class="mt-1 text-xs text-text-3">{plano.descricao}</p>
+
+                  <div class="mt-3 flex items-baseline gap-1">
+                    <span class="text-4xl font-extrabold text-text-1">
+                      {plano.precoMensal === 0 ? 'Grátis' : moeda(plano.precoMensal)}
+                    </span>
+                    {plano.precoMensal !== 0 && <span class="text-xs font-medium text-text-3">/mês</span>}
+                  </div>
+
+                  <div class="my-4 h-px w-full bg-border"></div>
+
+                  <ul class="flex-1 space-y-2">
+                    {plano.quotas.map((quota) => (
+                      <li class="flex items-start gap-2 text-xs">
+                        <svg class="size-4 mt-0.5 shrink-0 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                          <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/>
+                        </svg>
+                        <span class="text-text-2">
+                          {quota.rotulo}: {quota.limite === null ? 'Ilimitado' : quota.limite}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div class="mt-4 w-full">
+                    <BotaoMagnetico client:load
+                      as="a"
+                      href="https://app.simplecote.app/cadastro"
+                      className={
+                        'inline-flex w-full items-center justify-center gap-1.5 rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline-none h-10 px-4 ' +
+                        (plano.destaque
+                          ? 'bg-accent text-accent-foreground shadow-glow hover:scale-[1.02]'
+                          : 'border border-border-strong bg-surface-2 hover:bg-surface text-text-1')
+                      }
+                      data-cursor="mais"
+                    >
+                      Começar agora
+                    </BotaoMagnetico>
+                  </div>
+                </SpotlightCard>
+              </CardTilt>
+              {plano.destaque && <BorderBeam client:load className="rounded-2xl" />}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

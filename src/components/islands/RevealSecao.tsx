@@ -1,0 +1,47 @@
+import { useEffect, useRef, type ReactNode } from 'react'
+import { gsap, temMatchMedia } from '../../lib/gsap-scroll'
+import { useDeveAnimar } from '../../lib/reduzir-movimento'
+
+/**
+ * Reveal de seção via GSAP + ScrollTrigger: itens marcados com `data-reveal`
+ * entram com fade + translate (stagger). Substitui `SecaoRevelavel`/
+ * `useRevelarAoRolar`. Sem `deveAnimar`, os itens ficam visíveis sem animação.
+ */
+export function RevealSecao({
+  children,
+  className,
+  id,
+}: {
+  children: ReactNode
+  className?: string
+  id?: string
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const deveAnimar = useDeveAnimar()
+
+  useEffect(() => {
+    if (!deveAnimar || !temMatchMedia()) return
+    const el = ref.current
+    if (!el) return
+
+    const ctx = gsap.context(() => {
+      const itens = el.querySelectorAll('[data-reveal]')
+      gsap.from(itens, {
+        opacity: 0,
+        y: 24,
+        duration: 0.7,
+        ease: 'power2.out',
+        stagger: 0.08,
+        scrollTrigger: { trigger: el, start: 'top 80%' },
+      })
+    }, el)
+
+    return () => ctx.revert()
+  }, [deveAnimar])
+
+  return (
+    <div ref={ref} id={id} className={className}>
+      {children}
+    </div>
+  )
+}

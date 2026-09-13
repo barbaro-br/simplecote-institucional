@@ -1,1 +1,247 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/geist-mono";
+
+/* ── Tipografia de marca (Tailwind theme) ──────────────────────────────── */
+@theme {
+  --font-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ── Variáveis de marca ─────────────────────────────────────────────────── */
+:root {
+  /* Marca (cores de acento) */
+  --brand-navy: #1e3a5f;
+  --brand-navy-deep: #122040;
+  --brand-mint: #3fae7a;
+  --brand-mint-bright: #6fe6a8;
+
+  /* Escala unificada (design system) */
+  --bg: oklch(0.1 0.02 240);
+  --bg-deep: #122040;
+  --surface: #12263f;
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --text-1: #ffffff;
+  --text-2: rgba(255, 255, 255, 0.72);
+  --text-3: rgba(255, 255, 255, 0.45);
+  --accent: var(--brand-mint);
+  --accent-bright: var(--brand-mint-bright);
+  --accent-foreground: var(--brand-navy-deep);
+
+  /* Raio e sombra */
+  --radius-card: 1rem;
+  --radius-btn: 0.5rem;
+  --shadow-card: 0 20px 50px -12px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 20px color-mix(in srgb, var(--accent) 30%, transparent);
+
+  /* Motion */
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --motion-slow: 400ms;
+  --motion-beam: 4s;
+  --motion-marquee: 28s;
+  --motion-grid: 20s;
+  --motion-shimmer: 4s;
+  --motion-flash: 600ms;
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Tokens de painel (compat — aliases) */
+  --pnl-superficie: var(--surface);
+  --pnl-borda: var(--border);
+  --pnl-ring: rgba(255, 255, 255, 0.06);
+  --pnl-acento: #57bf8e;
+  --pnl-txt: var(--text-1);
+  --pnl-txt-2: var(--text-2);
+  --pnl-txt-3: var(--text-3);
+
+  /* shadcn/ui compat (aliases) */
+  --background: var(--bg);
+  --foreground: var(--text-1);
+  --muted-foreground: var(--text-3);
+  --input: var(--border);
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-foreground);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--text-1);
+  --ring: var(--accent);
+}
+
+/* ── Reset base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+/* ── Classes utilitárias de marca (Tailwind v4 via CSS) ─────────────────── */
+@utility bg-brand-navy { background-color: var(--brand-navy); }
+@utility bg-brand-navy-deep { background-color: var(--brand-navy-deep); }
+@utility bg-brand-mint { background-color: var(--brand-mint); }
+@utility bg-brand-mint-bright { background-color: var(--brand-mint-bright); }
+@utility text-brand-navy { color: var(--brand-navy); }
+@utility text-brand-navy-deep { color: var(--brand-navy-deep); }
+@utility text-brand-mint { color: var(--brand-mint); }
+@utility text-brand-mint-bright { color: var(--brand-mint-bright); }
+@utility border-brand-mint { border-color: var(--brand-mint); }
+@utility ring-brand-mint { --tw-ring-color: var(--brand-mint); }
+
+/* Escala unificada */
+@utility bg-surface { background-color: var(--surface); }
+@utility bg-surface-2 { background-color: var(--surface-2); }
+@utility bg-bg-deep { background-color: var(--bg-deep); }
+@utility border-border-strong { border-color: var(--border-strong); }
+@utility text-text-1 { color: var(--text-1); }
+@utility text-text-2 { color: var(--text-2); }
+@utility text-text-3 { color: var(--text-3); }
+@utility bg-accent { background-color: var(--accent); }
+@utility text-accent { color: var(--accent); }
+@utility border-accent { border-color: var(--accent); }
+@utility bg-accent-bright { background-color: var(--accent-bright); }
+@utility text-accent-bright { color: var(--accent-bright); }
+@utility text-accent-foreground { color: var(--accent-foreground); }
+@utility shadow-glow { box-shadow: var(--shadow-glow); }
+@utility shadow-card { box-shadow: var(--shadow-card); }
+
+/* shadcn/ui compat */
+@utility bg-background { background-color: var(--background); }
+@utility text-foreground { color: var(--foreground); }
+@utility text-muted-foreground { color: var(--muted-foreground); }
+@utility border-border { border-color: var(--border); }
+@utility bg-muted { background-color: var(--secondary); }
+@utility bg-primary { background-color: var(--primary); }
+@utility text-primary-foreground { color: var(--primary-foreground); }
+
+/* ── Animação: BorderBeam ───────────────────────────────────────────────── */
+@keyframes border-beam-spin {
+  from { --border-beam-angle: 0deg; }
+  to   { --border-beam-angle: 360deg; }
+}
+
+.border-beam {
+  @property --border-beam-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+  animation: border-beam-spin var(--motion-beam) linear infinite;
+  background: conic-gradient(
+    from var(--border-beam-angle),
+    transparent 0%,
+    transparent 70%,
+    var(--accent) 82%,
+    var(--accent-bright) 92%,
+    transparent 100%
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1px;
+}
+
+/* ── Animação: Marquee ──────────────────────────────────────────────────── */
+@keyframes marquee-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee-slide var(--motion-marquee) linear infinite;
+}
+
+/* ── Animação: GridAnimado ──────────────────────────────────────────────── */
+@keyframes grid-drift-anim {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(6px, -4px); }
+  50% { transform: translate(3px, 6px); }
+  75% { transform: translate(-5px, 2px); }
+}
+
+.grid-drift {
+  animation: grid-drift-anim var(--motion-grid) ease-in-out infinite;
+}
+
+/* ── Animação: TextoGradiente shimmer ───────────────────────────────────── */
+@keyframes shimmer-slide {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.texto-gradiente-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    var(--bg) 0%,
+    var(--accent) 30%,
+    var(--accent-bright) 50%,
+    var(--accent) 70%,
+    var(--bg) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer-slide var(--motion-shimmer) linear infinite;
+}
+
+/* ── Animação: DeckHero progress bar ───────────────────────────────────── */
+@keyframes deck-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ── Animação: anel de progresso do botão play/pause ───────────────────── */
+@keyframes deck-ring {
+  from { stroke-dashoffset: 100; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ── Animação: flash-green (GradeAoVivoDemo) ────────────────────────────── */
+@keyframes flash-green-anim {
+  0%, 100% { background-color: transparent; }
+  30%       { background-color: color-mix(in srgb, var(--accent) 25%, transparent); }
+}
+
+.flash-green {
+  animation: flash-green-anim var(--motion-flash) ease-out;
+}
+
+/* ── Estilos base do cursor custom ──────────────────────────────────────── */
+@media (pointer: fine) {
+  body:has([data-cursor-active]) {
+    cursor: none;
+  }
+}
+
+/* ── Scrollbar Customizada (Padrão SimpleCote) ────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-bright);
+}
+
+/* ── Acessibilidade: desliga animações decorativas ──────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .border-beam,
+  .marquee-track,
+  .grid-drift,
+  .texto-gradiente-shimmer,
+  .flash-green {
+    animation: none;
+  }
+}

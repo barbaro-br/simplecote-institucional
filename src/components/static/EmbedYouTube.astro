@@ -1,0 +1,34 @@
+---
+/**
+ * Slot de embed do YouTube. Sem id mostra placeholder "tutorial em breve".
+ * Categoria A — HTML/CSS puro, zero JS.
+ * Portado de simplecote-front/src/site/tech/EmbedYouTube.tsx
+ */
+interface Props {
+  videoId?: string
+  titulo?: string
+  class?: string
+}
+
+const { videoId, titulo = 'Vídeo do SimpleCote', class: className } = Astro.props
+---
+
+{!videoId ? (
+  <div class:list={['flex aspect-video w-full flex-col items-center justify-center gap-3 rounded-2xl border bg-background/60 text-center backdrop-blur-sm', className]}>
+    <span class="text-4xl" aria-hidden="true">▶</span>
+    <p class="px-6 text-sm text-muted-foreground">
+      Tutorial em vídeo em breve. Por enquanto, veja a demo ao lado.
+    </p>
+  </div>
+) : (
+  <div class:list={['aspect-video w-full overflow-hidden rounded-2xl border', className]}>
+    <iframe
+      class="h-full w-full"
+      src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+      title={titulo}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>
+  </div>
+)}
