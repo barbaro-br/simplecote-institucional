@@ -1,9 +1,4 @@
-# site/home Specification
-
-## Purpose
-Página inicial (`/`) — primeira impressão do produto, com o hero em formato "stories" e as seções de conteúdo que hoje moram na home do `simplecote-front`.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Home reproduz o conteúdo e o mecanismo visual da home atual
 
@@ -28,12 +23,3 @@ A home SHALL reproduzir o hero em formato "stories" da home atual (`src/site/Hom
 
 - **WHEN** o visitante observa o hero em execução
 - **THEN** o botão de play/pause enche ao longo do slide e um marcador (ex.: pontos) destaca qual slide está ativo
-
-### Requirement: Título e descrição da home miram a categoria de solução
-
-O `<title>`/`<meta name="description">` da home SHALL comunicar a categoria do produto ("cotação competitiva para supermercados"), reproduzindo a mensagem já validada na home atual — não um texto genérico de placeholder.
-
-#### Scenario: Título da home
-
-- **WHEN** a home é carregada
-- **THEN** o `<title>` contém "SimpleCote" e a frase "cotações competitivas para supermercados" (ou equivalente direto), igual ao `useSEO` da home atual do `simplecote-front`

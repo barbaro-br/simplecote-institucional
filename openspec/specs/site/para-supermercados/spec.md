@@ -7,17 +7,17 @@ Página nova, dedicada a quem ainda está pesquisando a dor ("como reduzir custo
 
 ### Requirement: Página dedicada à dor do comprador, com caminho até o produto
 
-O sistema SHALL oferecer, em `/para-supermercados`, uma página que começa pela dor (custo de compras, tempo perdido cotando por telefone/planilha/WhatsApp) e conduz o visitante até a explicação do produto, com CTA para `/precos` ou "Criar conta". O texto de introdução das dores principais SHALL utilizar o efeito de "Scrub Reveal", iniciando de forma mais neutra ou opaca e preenchendo as palavras/letras progressivamente vinculadas à descida do scroll da página, garantindo foco máximo na leitura.
+O sistema SHALL oferecer, em `/para-supermercados`, uma página que começa pela dor (custo de compras, tempo perdido cotando por telefone/planilha/WhatsApp) e conduz o visitante até a explicação do produto, com CTA para `/precos` ou "Criar conta", em viewport única (sem scroll de página, mesma arquitetura das demais páginas do site). As 6 seções (dor, "isso te soa familiar", solução, como funciona, resultado, CTA) SHALL ser navegáveis como slides, com controles de seta e indicador de progresso (pontos), preservando todo o texto no HTML gerado (sem depender de JS para SEO).
 
 #### Scenario: Acessar a página diretamente
 
 - **WHEN** um visitante chega a `/para-supermercados` vindo de uma busca pela dor (não pelo nome do produto)
 - **THEN** a página abre falando da dor antes de mencionar o mecanismo do produto, e termina com um caminho claro pra continuar (CTA)
 
-#### Scenario: Scrubbing no texto das dores
+#### Scenario: Navegação entre slides sem rolagem de página
 
-- **WHEN** o usuário rola a seção de dores da página (ex: "isso te soa familiar")
-- **THEN** o texto animado acende dinamicamente acompanhando o progresso do scroll do usuário
+- **WHEN** o visitante usa as setas ou os pontos de navegação
+- **THEN** a seção correspondente é exibida dentro da mesma viewport, sem a página rolar
 
 #### Scenario: Título mira a dor, não a categoria
 

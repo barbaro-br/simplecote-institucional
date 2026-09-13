@@ -28,3 +28,8 @@ O sistema SHALL oferecer, em `/como-funciona`, uma página dedicada explicando o
 
 - **WHEN** o visitante vê a página `/como-funciona`
 - **THEN** há cerca de 6 passos cobrindo o fluxo completo (criar conta até fechar pedidos), além dos 4 atuais
+
+#### Scenario: Previews interativos por passo
+
+- **WHEN** o visitante observa um passo
+- **THEN** o painel visual exibe o preview interativo daquele passo (ex.: lista de preços mudando ao vivo no passo de acompanhar respostas, ou animação de carta no passo de fechar pedidos)

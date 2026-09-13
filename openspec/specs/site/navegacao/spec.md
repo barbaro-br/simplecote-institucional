@@ -41,3 +41,31 @@ O site SHALL não exibir um footer global. As informações que ficavam no foote
 
 - **WHEN** o visitante abre qualquer página
 - **THEN** não há rodapé global de links/creditos na página
+
+### Requirement: Modo de apresentação opcional
+
+O site SHALL oferecer um modo de apresentação opcional (ex.: botão/toggle no header) que, quando ativado pelo visitante, navega automaticamente entre as páginas (Home → Como funciona → Preços → Ajuda → Sobre nós, em ciclo) a cada ~20–30 segundos. O modo SHALL ficar desligado por padrão e SHALL não interferir na navegação manual quando desativado.
+
+#### Scenario: Modo desligado por padrão
+
+- **WHEN** o visitante abre o site pela primeira vez
+- **THEN** o modo de apresentação está desligado e a navegação é apenas manual
+
+#### Scenario: Ativar o modo de apresentação
+
+- **WHEN** o visitante ativa o modo de apresentação
+- **THEN** o site passa a navegar sozinho entre as páginas em ciclo a cada ~20–30 segundos, até que o modo seja desativado
+
+### Requirement: Destaque da aba ativa no header
+
+O header SHALL indicar visualmente qual rota está ativa (ex.: a aba ativa com brilho/destaque na cor de acento, "verde cintilante"), e os itens de navegação SHALL ter um efeito de hover, permitindo ao visitante reconhecer onde está e o que é interativo.
+
+#### Scenario: Aba ativa destacada
+
+- **WHEN** o visitante está em uma página (ex.: Preços)
+- **THEN** a aba correspondente no header (ex.: "Preços") fica destacada com brilho na cor de acento, diferente das demais
+
+#### Scenario: Hover nos itens de navegação
+
+- **WHEN** o visitante passa o mouse sobre um item do header
+- **THEN** o item responde com um efeito de hover (ex.: mudança de cor/brilho)
