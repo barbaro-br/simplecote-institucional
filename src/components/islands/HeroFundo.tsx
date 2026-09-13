@@ -1,6 +1,6 @@
-import { Component, Suspense, lazy, useState, type ReactNode } from 'react'
-import { deveAnimar } from '../../lib/reduzir-movimento'
-import { viewportLarga } from '../../lib/viewport-larga'
+import { Component, Suspense, lazy, useEffect, useState, type ReactNode } from 'react'
+import { useDeveAnimar } from '../../lib/reduzir-movimento'
+import { useViewportLarga } from '../../lib/viewport-larga'
 
 const HeroShaderLazy = lazy(() => import('./HeroShader'))
 
@@ -37,22 +37,37 @@ function webglDisponivel(): boolean {
  * Camada FIXA de fundo da home — montada uma vez, atrás de toda a página
  * (`fixed inset-0 -z-10`). Em ordem de robustez:
  * (a) gradiente CSS brand-navy-deep → brand-navy SEMPRE presente;
- * (b) `<video>` de marca só com deveAnimar() e viewport >= md;
- * (c) HeroShader (R3F, lazy) só com deveAnimar(), viewport >= md e WebGL ok;
+ * (b) `<video>` de marca só com useDeveAnimar() e viewport >= md;
+ * (c) HeroShader (R3F, lazy) só com useDeveAnimar(), viewport >= md e WebGL ok;
  * (d) scrim por cima para contraste do texto.
+ *
+ * Todo valor que só existe no cliente (media query, WebGL) usa hook
+ * (`useSyncExternalStore`/`useEffect`) com resultado SSR-safe (`false`) na
+ * 1ª renderização — ler a versão síncrona direto no render aqui causava
+ * mismatch de hidratação (SSR sem `window` sempre renderiza `false`, cliente
+ * na hidratação já tem `window` e podia divergir na 1ª passada).
  *
  * variant="simples" (Preços, Ajuda) → só gradiente + scrim, sem vídeo nem shader.
  *
  * Ilha com client:load (está acima da dobra na home).
  */
 export function HeroFundo({ variant = 'completo' }: { variant?: 'completo' | 'simples' }) {
-  const animaOk = deveAnimar()
-  const larga = viewportLarga()
-  const [webglOk] = useState(() => (typeof window !== 'undefined' ? webglDisponivel() : false))
+  const animaOk = useDeveAnimar()
+  const larga = useViewportLarga()
+  // `webglDisponivel()` só roda depois de montar (não em `useState(() =>
+  // ...)`, que executaria no próprio render): mesma razão dos hooks de
+  // media query acima — rodar direto no render usa o valor real do cliente
+  // já na 1ª renderização, divergindo do HTML gerado no servidor (sem
+  // `window`) e disparando erro de hidratação do React.
+  const [webglOk, setWebglOk] = useState(false)
   const [sem3d, setSem3d] = useState(false)
 
   const podeVideo = variant === 'completo' && animaOk && larga
   const pode3d = podeVideo && webglOk && !sem3d
+
+  useEffect(() => {
+    if (podeVideo) setWebglOk(webglDisponivel())
+  }, [podeVideo])
 
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
