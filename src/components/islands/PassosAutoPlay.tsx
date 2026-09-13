@@ -424,7 +424,10 @@ function Passo6Preview() {
     <div className="w-full max-w-sm space-y-3">
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold text-text-1">3 pedidos gerados</span>
-        <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-medium text-accent">
+        <span
+          key={Math.min(enviados, PEDIDOS_DEMO.length)}
+          className="pop rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-medium text-accent"
+        >
           {Math.min(enviados, PEDIDOS_DEMO.length)}/{PEDIDOS_DEMO.length} enviados
         </span>
       </div>
@@ -435,8 +438,12 @@ function Passo6Preview() {
           return (
             <div
               key={p.empresa}
-              className={`flex items-center justify-between gap-2 rounded-md border px-3 py-2.5 transition-colors ${
-                enviado ? 'border-accent/40 bg-accent/10' : 'border-border bg-background'
+              className={`flex items-center justify-between gap-2 rounded-md border px-3 py-2.5 transition-all duration-300 ${
+                enviado
+                  ? `border-accent/40 bg-accent/10 ${i === enviados - 1 ? 'flash-green' : ''}`
+                  : enviando
+                    ? 'border-accent/50 bg-accent/5 opacity-100 ring-1 ring-accent/30'
+                    : 'border-border bg-background opacity-45'
               }`}
             >
               <div className="min-w-0">
@@ -446,7 +453,7 @@ function Passo6Preview() {
               <div className="flex shrink-0 items-center gap-2">
                 <span className="text-xs font-semibold tabular-nums text-text-2">{moeda(p.total)}</span>
                 {enviado ? (
-                  <IconeCheck className="size-4 text-accent" />
+                  <IconeCheck key="check" className="pop size-4 text-accent" />
                 ) : enviando ? (
                   <span className="size-4 animate-spin rounded-full border-2 border-accent border-t-transparent" />
                 ) : (
