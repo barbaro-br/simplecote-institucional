@@ -3,13 +3,16 @@
  * Página Para Supermercados — /para-supermercados
  * Copy 100% de openspec/changes/migrar-site-institucional-para-astro/copy-para-supermercados.md
  * Estrutura: dor → isso te soa familiar → solução → como funciona → resultado → CTA
+ *
+ * Tela cheia sem scroll de página (mesmo padrão de /precos e /como-funciona):
+ * as 6 seções viram "slides" navegados por setas/pontos (JS vanilla, Categoria B).
+ * Todo o texto continua no HTML do build (SEO preservado) — os slides inativos
+ * só ficam com o atributo `hidden`, nunca removidos do DOM.
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
 import { HeroFundo } from '../components/islands/HeroFundo'
 import Painel from '../components/static/Painel.astro'
-import RevealSecao from "../components/enhanced/RevealSecao.astro"
-import { ScrubText } from "../components/islands/ScrubText"
-import SpotlightCard from "../components/enhanced/SpotlightCard.astro"
+import SpotlightCard from '../components/enhanced/SpotlightCard.astro'
 
 const LISTA_DOR = [
   'Você liga pra 5 fornecedores, um por um, e anota o preço numa planilha (ou no papel)',
@@ -35,27 +38,27 @@ const PASSOS = [
   titulo="Reduza o custo de compras do seu supermercado | SimpleCote"
   descricao="Pare de perder dinheiro cotando fornecedor por telefone. Monte uma cotação, convide fornecedores e deixe eles disputarem o menor preço — sem planilha."
 >
-  <div class="overflow-x-clip">
+  <div class="relative flex h-full flex-col overflow-hidden">
     <HeroFundo variant="simples" client:load />
 
-    <div class="relative z-10">
-      <!-- Seção 1 — Abertura (a dor) -->
-      <RevealSecao class="px-4 pb-12 pt-20">
-        <div data-reveal class="mx-auto max-w-3xl space-y-6 text-center">
-          <h1 class="text-4xl font-bold tracking-tight text-text-1 sm:text-5xl md:text-6xl">
-            <ScrubText client:visible>Pare de perder dinheiro cotando por telefone e WhatsApp</ScrubText>
+    <div id="ps-slides" class="relative z-10 flex-1 min-h-0">
+      <!-- Slide 1 — Abertura (a dor) -->
+      <section class="ps-slide is-active flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6">
+        <div class="mx-auto max-w-3xl space-y-6 text-center">
+          <h1 data-reveal class="text-4xl font-bold tracking-tight text-text-1 sm:text-5xl md:text-6xl">
+            Pare de perder dinheiro cotando por telefone e WhatsApp
           </h1>
-          <p class="mx-auto max-w-2xl text-lg text-text-2">
+          <p data-reveal class="mx-auto max-w-2xl text-lg text-text-2">
             Cada minuto que você gasta ligando pra fornecedor um por um é dinheiro saindo da margem do seu supermercado. E sem comparar todo mundo ao mesmo tempo, você nunca sabe se pagou o melhor preço possível — só o melhor preço que conseguiu perguntar.
           </p>
         </div>
-      </RevealSecao>
+      </section>
 
-      <!-- Seção 2 — "Isso te soa familiar?" -->
-      <RevealSecao class="px-4 pb-16">
-        <Painel class="p-6 sm:p-10 md:p-14">
+      <!-- Slide 2 — "Isso te soa familiar?" -->
+      <section class="ps-slide flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6" hidden>
+        <Painel class="mx-auto w-full max-w-3xl p-6 sm:p-10 md:p-14">
           <div data-reveal class="mb-8">
-            <h2 class="text-2xl font-bold tracking-tight sm:text-3xl"><ScrubText client:visible>Isso te soa familiar?</ScrubText></h2>
+            <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">Isso te soa familiar?</h2>
           </div>
           <ul class="space-y-4">
             {LISTA_DOR.map((item) => (
@@ -71,23 +74,23 @@ const PASSOS = [
             ))}
           </ul>
         </Painel>
-      </RevealSecao>
+      </section>
 
-      <!-- Seção 3 — A solução -->
-      <RevealSecao class="px-4 pb-16">
-        <div data-reveal class="mx-auto max-w-3xl space-y-4 text-center">
-          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-            <ScrubText client:visible>Existe um jeito de fazer isso em minutos, não em dias</ScrubText>
+      <!-- Slide 3 — A solução -->
+      <section class="ps-slide flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6" hidden>
+        <div class="mx-auto max-w-3xl space-y-4 text-center">
+          <h2 data-reveal class="text-3xl font-bold tracking-tight sm:text-4xl">
+            Existe um jeito de fazer isso em minutos, não em dias
           </h2>
-          <p class="text-lg text-muted-foreground">
+          <p data-reveal class="text-lg text-muted-foreground">
             SimpleCote é uma plataforma de cotação competitiva — um leilão reverso pensado pro dia a dia do supermercado. Você monta a lista de itens uma vez, convida seus fornecedores por um link, e eles disputam o menor preço de cada item, ao vivo, todos ao mesmo tempo.
           </p>
         </div>
-      </RevealSecao>
+      </section>
 
-      <!-- Seção 4 — Como funciona (resumo + link) -->
-      <RevealSecao class="px-4 pb-16">
-        <Painel class="p-6 sm:p-10 md:p-14">
+      <!-- Slide 4 — Como funciona (resumo + link) -->
+      <section class="ps-slide flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6" hidden>
+        <Painel class="mx-auto w-full max-w-3xl p-6 sm:p-10 md:p-14">
           <div data-reveal class="mb-8 text-center">
             <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">Como funciona, em 3 passos</h2>
           </div>
@@ -116,32 +119,34 @@ const PASSOS = [
             </a>
           </div>
         </Painel>
-      </RevealSecao>
+      </section>
 
-      <!-- Seção 5 — O resultado -->
-      <RevealSecao class="px-4 pb-16">
-        <div data-reveal class="mx-auto mb-8 max-w-2xl text-center">
-          <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">O resultado: preço menor, sem esforço a mais</h2>
+      <!-- Slide 5 — O resultado -->
+      <section class="ps-slide flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6" hidden>
+        <div class="mx-auto w-full max-w-5xl">
+          <div data-reveal class="mx-auto mb-8 max-w-2xl text-center">
+            <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">O resultado: preço menor, sem esforço a mais</h2>
+          </div>
+          <div class="grid gap-6 md:grid-cols-3">
+            {RESULTADO.map((texto) => (
+              <SpotlightCard class="p-6">
+                <div class="flex items-start gap-3">
+                  <svg class="mt-0.5 size-5 shrink-0 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                    <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>
+                  </svg>
+                  <p class="text-sm text-muted-foreground">{texto}</p>
+                </div>
+              </SpotlightCard>
+            ))}
+          </div>
         </div>
-        <div class="grid gap-6 md:grid-cols-3">
-          {RESULTADO.map((texto) => (
-            <SpotlightCard class="p-6">
-              <div data-reveal class="flex items-start gap-3">
-                <svg class="mt-0.5 size-5 shrink-0 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
-                  <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>
-                </svg>
-                <p class="text-sm text-muted-foreground">{texto}</p>
-              </div>
-            </SpotlightCard>
-          ))}
-        </div>
-      </RevealSecao>
+      </section>
 
-      <!-- Seção 6 — CTA final -->
-      <RevealSecao class="px-4 pb-24">
-        <div data-reveal class="mx-auto max-w-xl text-center">
-          <h2 class="mb-4 text-3xl font-bold tracking-tight">Comece grátis, sem cartão de crédito</h2>
-          <div class="flex flex-wrap justify-center gap-3">
+      <!-- Slide 6 — CTA final -->
+      <section class="ps-slide flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6" hidden>
+        <div class="mx-auto max-w-xl text-center">
+          <h2 data-reveal class="mb-4 text-3xl font-bold tracking-tight">Comece grátis, sem cartão de crédito</h2>
+          <div data-reveal class="flex flex-wrap justify-center gap-3">
             <a
               href="https://app.simplecote.app/cadastro"
               class="inline-flex items-center justify-center gap-1.5 rounded-md text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none h-10 px-8 bg-accent text-accent-foreground shadow hover:bg-accent/90"
@@ -157,7 +162,111 @@ const PASSOS = [
             </a>
           </div>
         </div>
-      </RevealSecao>
+      </section>
+    </div>
+
+    <!-- Indicador de progresso (pontos) -->
+    <div class="relative z-10 flex shrink-0 items-center justify-center gap-2 pb-1 pt-2" aria-hidden="true">
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <button
+          type="button"
+          data-ps-dot={i}
+          aria-label={`Ir para a seção ${i + 1}`}
+          class:list={['h-2 rounded-full transition-all', i === 0 ? 'w-6 bg-accent' : 'w-2 bg-border hover:bg-text-3']}
+        />
+      ))}
+    </div>
+
+    <!-- Controles -->
+    <div class="relative z-10 flex shrink-0 items-center justify-center gap-3 pb-4 pt-1">
+      <button
+        type="button"
+        id="ps-prev"
+        aria-label="Seção anterior"
+        class="flex size-9 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-text-1 transition-colors hover:bg-surface"
+      >
+        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+          <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        id="ps-next"
+        aria-label="Próxima seção"
+        class="flex size-9 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-text-1 transition-colors hover:bg-surface"
+      >
+        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+          <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/>
+        </svg>
+      </button>
     </div>
   </div>
 </SiteLayout>
+
+<style>
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .ps-slide.is-active [data-reveal] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  [data-reveal]:nth-child(1) {
+    transition-delay: 0s;
+  }
+  [data-reveal]:nth-child(2) {
+    transition-delay: 0.08s;
+  }
+  [data-reveal]:nth-child(3) {
+    transition-delay: 0.16s;
+  }
+  [data-reveal]:nth-child(4) {
+    transition-delay: 0.24s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      transition: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const container = document.getElementById('ps-slides')
+
+  if (container) {
+    const slides = Array.from(container.querySelectorAll<HTMLElement>('.ps-slide'))
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-ps-dot]'))
+    const N = slides.length
+    let indice = 0
+
+    function mostrar(i: number) {
+      indice = ((i % N) + N) % N
+      slides.forEach((slide, idx) => {
+        const ativo = idx === indice
+        slide.hidden = !ativo
+        slide.classList.toggle('is-active', ativo)
+      })
+      dots.forEach((dot, idx) => {
+        const ativo = idx === indice
+        dot.classList.toggle('bg-accent', ativo)
+        dot.classList.toggle('w-6', ativo)
+        dot.classList.toggle('bg-border', !ativo)
+        dot.classList.toggle('w-2', !ativo)
+        dot.setAttribute('aria-current', ativo ? 'true' : 'false')
+      })
+    }
+
+    dots.forEach((dot, idx) => dot.addEventListener('click', () => mostrar(idx)))
+    document.getElementById('ps-prev')?.addEventListener('click', () => mostrar(indice - 1))
+    document.getElementById('ps-next')?.addEventListener('click', () => mostrar(indice + 1))
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') mostrar(indice - 1)
+      if (e.key === 'ArrowRight') mostrar(indice + 1)
+    })
+  }
+</script>
