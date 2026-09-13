@@ -10,7 +10,6 @@
  * só ficam com o atributo `hidden`, nunca removidos do DOM.
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
-import { HeroFundo } from '../components/islands/HeroFundo'
 import Painel from '../components/static/Painel.astro'
 import SpotlightCard from '../components/enhanced/SpotlightCard.astro'
 
@@ -39,7 +38,6 @@ const PASSOS = [
   descricao="Pare de perder dinheiro cotando fornecedor por telefone. Monte uma cotação, convide fornecedores e deixe eles disputarem o menor preço — sem planilha."
 >
   <div class="relative flex h-full flex-col overflow-hidden">
-    <HeroFundo variant="simples" client:load />
 
     <div id="ps-slides" class="relative z-10 flex-1 min-h-0">
       <!-- Slide 1 — Abertura (a dor) -->

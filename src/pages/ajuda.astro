@@ -4,7 +4,6 @@
  * Tela cheia (sem scroll): FAQ em accordion com scroll interno no painel.
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
-import { HeroFundo } from '../components/islands/HeroFundo'
 import { PERGUNTAS_FREQUENTES } from '../data/faq'
 import { FaqComVideo } from '../components/islands/FaqComVideo'
 ---
@@ -14,7 +13,6 @@ import { FaqComVideo } from '../components/islands/FaqComVideo'
   descricao="Perguntas frequentes sobre como usar o SimpleCote."
 >
   <div class="relative h-full overflow-hidden">
-    <HeroFundo variant="simples" client:load />
 
     <div class="relative z-10 flex h-full flex-col">
       <header class="px-4 pt-8 text-center">

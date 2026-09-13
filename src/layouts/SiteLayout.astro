@@ -9,11 +9,13 @@
  *
  * Links "Criar conta"/"Entrar" apontam para app.simplecote.app conforme spec.
  */
+import { ClientRouter } from 'astro:transitions'
 import '../styles/global.css'
 import BrandLogo from '../components/static/BrandLogo.astro'
 import CursorMais from '../components/enhanced/CursorMais.astro'
 import BotaoMagnetico from '../components/enhanced/BotaoMagnetico.astro'
 import Marquee from '../components/enhanced/Marquee.astro'
+import { HeroFundo } from '../components/islands/HeroFundo'
 
 interface Props {
   titulo: string
@@ -50,8 +52,10 @@ const DIFERENCIAIS = [
     <meta property="og:type" content="website" />
     {ogImage && <meta property="og:image" content={ogImage} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <ClientRouter />
   </head>
   <body class="flex h-dvh flex-col overflow-hidden text-foreground bg-background">
+    <HeroFundo client:load transition:persist transition:name="hero-fundo" />
     <CursorMais />
 
     {!sem_chrome && (
@@ -75,8 +79,8 @@ const DIFERENCIAIS = [
                 ['/', 'Home'],
                 ['/como-funciona', 'Como funciona'],
                 ['/precos', 'Preços'],
-                ['/ajuda', 'Ajuda'],
                 ['/sobre-nos', 'Sobre nós'],
+                ['/ajuda', 'Ajuda'],
               ].map(([href, rotulo]) => (
                 <a
                   href={href}
@@ -148,8 +152,8 @@ const DIFERENCIAIS = [
               ['/', 'Home'],
               ['/como-funciona', 'Como funciona'],
               ['/precos', 'Preços'],
-              ['/ajuda', 'Ajuda'],
               ['/sobre-nos', 'Sobre nós'],
+              ['/ajuda', 'Ajuda'],
               ['https://app.simplecote.app/login', 'Entrar'],
             ].map(([href, rotulo]) => (
               <a
@@ -212,7 +216,7 @@ const DIFERENCIAIS = [
       }
 
       // Modo apresentação: ciclo automático de páginas (opt-in, ~25s)
-      const ROTAS_DEMO = ['/', '/como-funciona', '/precos', '/ajuda', '/sobre-nos']
+      const ROTAS_DEMO = ['/', '/como-funciona', '/precos', '/sobre-nos', '/ajuda']
       const DEMO_KEY = 'sc-demo'
       const INTERVALO_DEMO = 25000
       const demoToggle = document.getElementById('demo-toggle')

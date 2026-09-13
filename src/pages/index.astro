@@ -5,7 +5,6 @@
  * As seções "Como funciona" e "Planos" têm páginas próprias (acessíveis pelo header).
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
-import { HeroFundo } from '../components/islands/HeroFundo'
 import { DeckHero } from '../components/islands/DeckHero'
 ---
 
@@ -15,7 +14,6 @@ import { DeckHero } from '../components/islands/DeckHero'
   ogImage="/hero.png"
 >
   <div class="relative h-full overflow-hidden">
-    <HeroFundo client:load />
 
     <div class="relative z-10 h-full">
       <DeckHero client:load />

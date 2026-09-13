@@ -4,7 +4,6 @@
  * Tela cheia (sem scroll): hero compacto + grade de 3 planos.
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
-import { HeroFundo } from '../components/islands/HeroFundo'
 import SpotlightCard from "../components/enhanced/SpotlightCard.astro"
 import CardTilt from "../components/enhanced/CardTilt.astro"
 import BorderBeam from "../components/enhanced/BorderBeam.astro"
@@ -21,7 +20,6 @@ function moeda(valor: number): string {
   descricao="Conheça os planos do SimpleCote e escolha o ideal para o seu supermercado."
 >
   <div class="relative h-full overflow-hidden">
-    <HeroFundo variant="simples" client:load />
 
     <div class="relative z-10 flex h-full flex-col">
       <header class="px-4 pt-8 text-center">

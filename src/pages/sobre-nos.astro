@@ -6,7 +6,6 @@
  * "slides" navegados por setas/pontos (JS vanilla, Categoria B).
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
-import { HeroFundo } from '../components/islands/HeroFundo'
 import { siSentry } from 'simple-icons'
 
 const CONTATO_EMAIL = 'f.montalvao@icloud.com'
@@ -96,7 +95,6 @@ const GRUPOS_TECH = [
   descricao="Conheça a história, o propósito e a equipe por trás do SimpleCote."
 >
   <div class="relative flex h-full flex-col overflow-hidden">
-    <HeroFundo variant="simples" client:load />
 
     <div id="sn-slides" class="relative z-10 flex-1 min-h-0">
       <!-- Slide 1 — Nosso intuito -->
