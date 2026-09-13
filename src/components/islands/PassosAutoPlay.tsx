@@ -60,6 +60,14 @@ function IconeEnvelope({ className = 'size-8' }: { className?: string }) {
   )
 }
 
+function IconeTelefone({ className = 'size-4' }: { className?: string }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+      <path d="M231.88,175.08A56.26,56.26,0,0,1,176,224C96.6,224,32,159.4,32,80A56.26,56.26,0,0,1,80.92,24.12a16,16,0,0,1,16.62,9.51l21.12,47.15.13.32A16,16,0,0,1,117,96.25c-.18.27-.37.53-.57.78L96,121.45c7.49,15.22,23.41,31,38.83,38.51l24.34-20.35c.25-.21.51-.4.78-.57a16,16,0,0,1,15.17-1.4l.32.13,47.15,21.12A16,16,0,0,1,231.88,175.08Z"/>
+    </svg>
+  )
+}
+
 function IconeCheck({ className = 'size-4' }: { className?: string }) {
   return (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
@@ -381,26 +389,44 @@ function Passo3Preview() {
           }`}
         >
           <span
-            className={`flex size-5 shrink-0 items-center justify-center rounded border ${
+            className={`relative flex size-5 shrink-0 items-center justify-center rounded border ${
               i < marcados ? 'border-accent bg-accent text-accent-foreground' : 'border-border-strong'
             }`}
           >
             {i < marcados && <IconeCheck className="size-3.5" />}
+            {i === marcados && estagio < 3 && (
+              <span key={estagio} className="cursor-clica absolute -right-2 -top-2 text-text-1">
+                <IconeCursor className="size-3.5" />
+              </span>
+            )}
           </span>
           <div className="min-w-0">
             <div className="truncate text-sm font-medium text-text-1">{rep.nome}</div>
-            <div className="truncate text-[10px] text-text-3">{rep.email}</div>
-            <div className="text-[10px] text-text-3">{rep.contato}</div>
+            <div className="flex items-center gap-1 truncate text-[10px] text-text-3">
+              <IconeEnvelope className="size-2.5 shrink-0" />
+              {rep.email}
+            </div>
+            <div className="flex items-center gap-1 text-[10px] text-text-3">
+              <IconeTelefone className="size-2.5 shrink-0" />
+              {rep.contato}
+            </div>
           </div>
         </div>
       ))}
-      <div
-        className={`rounded-md py-2 text-center text-sm font-semibold transition-colors ${
-          estagio === 3 ? 'bg-accent text-accent-foreground' : 'border border-dashed border-border text-text-3'
-        }`}
-      >
-        Convidar {marcados > 0 ? `${marcados} ` : ''}
-        {marcados === 1 ? 'representante' : 'representantes'}
+      <div className="relative">
+        <div
+          className={`rounded-md py-2 text-center text-sm font-semibold transition-colors ${
+            estagio === 3 ? 'bg-accent text-accent-foreground' : 'border border-dashed border-border text-text-3'
+          }`}
+        >
+          Convidar {marcados > 0 ? `${marcados} ` : ''}
+          {marcados === 1 ? 'representante' : 'representantes'}
+        </div>
+        {estagio === 3 && (
+          <span className="cursor-clica absolute -right-2 -top-2 text-text-1">
+            <IconeCursor className="size-3.5" />
+          </span>
+        )}
       </div>
     </div>
   )
