@@ -7,7 +7,9 @@
  *  - CursorMais em todas as páginas
  *  - SEO: title/description/og:* via props — nunca useEffect
  *
- * Links "Criar conta"/"Entrar" apontam para app.simplecote.app conforme spec.
+ * Links "Criar conta" apontam para app.simplecote.app (cadastro); "Entrar"
+ * aponta para login.simplecote.app (mesmo host neutro do app, subdomínio
+ * mais curto/dedicado pra tela de login — RISCOS-TRANSVERSAIS §0).
  */
 import { ClientRouter } from 'astro:transitions'
 import '../styles/global.css'
@@ -63,7 +65,7 @@ const DIFERENCIAIS = [
         id="site-header"
         class="relative w-full shrink-0 bg-background/80 backdrop-blur-md"
       >
-        <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4">
+        <div class="flex h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8">
           <a
             href="/"
             aria-label="SimpleCote — página inicial"
@@ -93,7 +95,7 @@ const DIFERENCIAIS = [
                 </a>
               ))}
               <a
-                href="https://app.simplecote.app/login"
+                href="https://login.simplecote.app/login"
                 class="text-sm font-medium text-text-1 hover:underline"
                 data-cursor="mais"
               >
@@ -108,20 +110,6 @@ const DIFERENCIAIS = [
             >
               Criar conta
             </BotaoMagnetico>
-
-            <!-- Modo apresentação (toggle opt-in) -->
-            <button
-              type="button"
-              id="demo-toggle"
-              aria-label="Ativar modo apresentação"
-              aria-pressed="false"
-              title="Modo apresentação"
-              class="flex size-9 items-center justify-center rounded-md text-text-2 transition-colors hover:bg-surface-2 hover:text-text-1"
-            >
-              <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
-                <path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/>
-              </svg>
-            </button>
 
             <!-- Menu mobile toggle (JS progressivo) -->
             <button
@@ -154,7 +142,7 @@ const DIFERENCIAIS = [
               ['/precos', 'Preços'],
               ['/sobre-nos', 'Sobre nós'],
               ['/ajuda', 'Ajuda'],
-              ['https://app.simplecote.app/login', 'Entrar'],
+              ['https://login.simplecote.app/login', 'Entrar'],
             ].map(([href, rotulo]) => (
               <a
                 href={href}
@@ -214,43 +202,6 @@ const DIFERENCIAIS = [
           }
         })
       }
-
-      // Modo apresentação: ciclo automático de páginas (opt-in, ~25s)
-      const ROTAS_DEMO = ['/', '/como-funciona', '/precos', '/sobre-nos', '/ajuda']
-      const DEMO_KEY = 'sc-demo'
-      const INTERVALO_DEMO = 25000
-      const demoToggle = document.getElementById('demo-toggle')
-
-      const demoAtivo = () => {
-        try { return localStorage.getItem(DEMO_KEY) === '1' } catch { return false }
-      }
-      const atualizarDemoBtn = () => {
-        if (!demoToggle) return
-        const on = demoAtivo()
-        demoToggle.setAttribute('aria-pressed', String(on))
-        demoToggle.setAttribute('aria-label', on ? 'Desativar modo apresentação' : 'Ativar modo apresentação')
-        demoToggle.classList.toggle('text-accent', on)
-      }
-      const agendarDemo = () => {
-        const atual = window.location.pathname
-        const idx = ROTAS_DEMO.indexOf(atual)
-        const proxima = ROTAS_DEMO[(idx + 1) % ROTAS_DEMO.length]
-        window.setTimeout(() => {
-          if (demoAtivo()) window.location.href = proxima
-        }, INTERVALO_DEMO)
-      }
-
-      atualizarDemoBtn()
-      if (demoAtivo()) agendarDemo()
-
-      demoToggle?.addEventListener('click', () => {
-        try {
-          if (demoAtivo()) localStorage.removeItem(DEMO_KEY)
-          else localStorage.setItem(DEMO_KEY, '1')
-        } catch {}
-        atualizarDemoBtn()
-        if (demoAtivo()) agendarDemo()
-      })
     </script>
   </body>
 </html>
