@@ -1,47 +1,315 @@
 ---
 /**
  * Página Sobre nós — /sobre-nos
- * Intuito do projeto, história (backstory) e contato ("fale aqui").
- * Contato ainda pendente: falta um canal real (e-mail/WhatsApp) do humano.
+ * Tela cheia sem scroll de página (mesmo padrão de /como-funciona e
+ * /para-supermercados): intuito, história, stack técnica e contato viram
+ * "slides" navegados por setas/pontos (JS vanilla, Categoria B).
  */
 import SiteLayout from '../layouts/SiteLayout.astro'
 import { HeroFundo } from '../components/islands/HeroFundo'
+import Marquee from '../components/enhanced/Marquee.astro'
+import { siAstro, siReact, siVite, siSpring, siVercel } from 'simple-icons'
+
+const CONTATO_EMAIL = 'f.montalvao@icloud.com'
+const CONTATO_WHATSAPP_DIGITOS = '5538997225058'
+const CONTATO_WHATSAPP_EXIBICAO = '+55 (38) 99722-5058'
+const CONTATO_GITHUB = 'https://github.com/barbaro-br'
+const CONTATO_LINKEDIN = 'https://www.linkedin.com/in/br-barbaro/'
+
+// Java e Heroku não têm ícone no pacote simple-icons (marca restrita pela
+// Oracle/Salesforce) — usam monograma como alternativa.
+const STACK = [
+  { titulo: 'Site institucional', nome: 'Astro', cor: `#${siAstro.hex}`, path: siAstro.path, href: 'https://astro.build' },
+  { titulo: 'Aplicativo', nome: 'React', cor: `#${siReact.hex}`, path: siReact.path, href: 'https://react.dev' },
+  { titulo: 'Aplicativo', nome: 'Vite', cor: `#${siVite.hex}`, path: siVite.path, href: 'https://vite.dev' },
+  { titulo: 'Backend', nome: 'Java', cor: '#f89820', href: 'https://www.java.com' },
+  { titulo: 'Backend', nome: 'Spring', cor: `#${siSpring.hex}`, path: siSpring.path, href: 'https://spring.io' },
+  { titulo: 'Deploy', nome: 'Vercel', cor: `#${siVercel.hex}`, path: siVercel.path, href: 'https://vercel.com' },
+  { titulo: 'Deploy', nome: 'Heroku', cor: '#c9a0ff', href: 'https://www.heroku.com' },
+]
 ---
 
 <SiteLayout
   titulo="Sobre nós — SimpleCote"
   descricao="Conheça a história, o propósito e a equipe por trás do SimpleCote."
 >
-  <div class="relative h-full overflow-hidden">
+  <div class="relative flex h-full flex-col overflow-hidden">
     <HeroFundo variant="simples" client:load />
 
-    <div class="relative z-10 flex h-full flex-col">
-      <header class="px-4 pt-8 text-center">
-        <h1 class="text-3xl font-extrabold tracking-tight text-text-1 sm:text-4xl">Sobre nós</h1>
-      </header>
-
-      <div class="mx-auto w-full max-w-3xl flex-1 min-h-0 space-y-8 overflow-y-auto px-4 pb-4 pt-6">
-        <section>
-          <h2 class="text-xl font-bold text-text-1">Nosso intuito</h2>
-          <p class="mt-2 text-text-2 leading-relaxed">
+    <div id="sn-slides" class="relative z-10 flex-1 min-h-0">
+      <!-- Slide 1 — Nosso intuito -->
+      <section class="sn-slide is-active flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6">
+        <div class="mx-auto max-w-2xl space-y-4 text-center">
+          <h1 data-reveal class="text-3xl font-extrabold tracking-tight text-text-1 sm:text-4xl">Nosso intuito</h1>
+          <p data-reveal class="text-lg leading-relaxed text-text-2">
             Quem compra para supermercado conhece bem essa rotina: ligar um por um pros fornecedores, anotar preço em planilha ou no papel, e mesmo assim nunca ter certeza se conseguiu o melhor preço possível — só o melhor preço que deu tempo de perguntar. O SimpleCote existe pra resolver exatamente isso. Em vez de cotar fornecedor por fornecedor, você abre uma cotação, convida todos de uma vez, e eles disputam o menor preço de cada item ao vivo, na sua frente. Sem ligação, sem planilha, sem adivinhação.
           </p>
-        </section>
+        </div>
+      </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-text-1">Como tudo começou</h2>
-          <p class="mt-2 text-text-2 leading-relaxed">
-            Começamos resolvendo esse problema para um punhado de supermercados que viviam o mesmo processo manual e cansativo de cotar por telefone. A cada cotação rodada na grade ao vivo, aprendíamos um pouco mais sobre o que realmente importa pra quem compra — e o produto foi crescendo a partir disso, com a mão na massa, junto de quem usa todo dia.
-          </p>
-        </section>
+      <!-- Slide 2 — Como tudo começou -->
+      <section class="sn-slide flex h-full flex-col items-center justify-center overflow-y-auto px-4 py-6" hidden>
+        <div class="mx-auto max-w-2xl">
+          <h2 data-reveal class="mb-4 text-center text-2xl font-bold tracking-tight text-text-1 sm:text-3xl">
+            Como tudo começou
+          </h2>
+          <div class="space-y-3 text-sm leading-relaxed text-text-2 sm:text-base">
+            <p data-reveal>
+              O SimpleCote nasceu de uma dor bem concreta, vista de perto. Eu trabalhava como representante comercial autônomo atendendo o Martins Atacadista, e um dos meus clientes precisava fazer cotação com vários fornecedores — mas não queria mais depender de planilha pra isso. Como eu também era estudante de Ciência da Computação, propus resolver aquilo com uma aplicação.
+            </p>
+            <p data-reveal>
+              A ideia era simples: o comprador monta a lista do que precisa, convida os fornecedores, e cada um recebe um link único (por e-mail ou WhatsApp) pra colocar o preço de cada item. Tudo ao vivo, numa grade só, sem ninguém precisar ligar pra ninguém.
+            </p>
+            <p data-reveal>
+              Resolvido o problema daquele cliente, ficou claro que a dor não era só dele — era de qualquer supermercado que ainda cotava por telefone. Foi aí que o SimpleCote deixou de ser uma aplicação pontual e virou um SaaS de verdade: hoje o comprador tem à disposição uma base de quase 100 mil itens já cadastrados pra incluir na cotação, escolhendo a quantidade e a embalagem de cada um do seu jeito (caixa com 12, com 20, com 30 — como fizer sentido pra ele). Depois de convidar as empresas e abrir a cotação, cada representante recebe seu link e preenche o preço; o comprador acompanha tudo num painel ao vivo, e pode continuar ajustando — adicionando item ou representante — até o prazo que ele mesmo definiu se encerrar.
+            </p>
+            <p data-reveal>
+              Nosso intuito agora é levar esse mesmo mecanismo simples de usar pra supermercados do Brasil inteiro — transformar o SimpleCote numa aplicação nacional.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-text-1">Fale com a gente</h2>
-          <p class="mt-2 text-text-2">
-            [Contato / "fale aqui" — pendente: falta um e-mail ou WhatsApp real de suporte pra publicar aqui]
-          </p>
-        </section>
-      </div>
+      <!-- Slide 3 — Tecnologia + Fale com a gente -->
+      <section class="sn-slide flex h-full flex-col overflow-y-auto px-4 py-6" hidden>
+        <div class="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center">
+          <h2 data-reveal class="mb-6 text-center text-2xl font-bold tracking-tight text-text-1 sm:text-3xl">
+            Tecnologia por trás do SimpleCote
+          </h2>
+          <div data-reveal class="w-full [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+            <Marquee>
+              {STACK.map((item) => (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mx-3 flex h-52 w-56 shrink-0 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-surface-2 px-6 transition-colors hover:border-accent/40"
+                  data-cursor="mais"
+                >
+                  {item.path ? (
+                    <svg
+                      class="size-14"
+                      viewBox="0 0 24 24"
+                      fill={item.nome === 'Vercel' ? '#fff' : item.cor}
+                    >
+                      <path d={item.path} />
+                    </svg>
+                  ) : (
+                    <span
+                      class="flex size-14 shrink-0 items-center justify-center rounded-xl text-2xl font-extrabold text-[var(--brand-navy-deep,#122040)]"
+                      style={`background:${item.cor}`}
+                    >
+                      {item.nome[0]}
+                    </span>
+                  )}
+                  <div class="text-center">
+                    <div class="text-xl font-bold text-text-1">{item.nome}</div>
+                    <div class="text-[10px] uppercase tracking-wide text-text-3">{item.titulo}</div>
+                  </div>
+                </a>
+              ))}
+            </Marquee>
+          </div>
+        </div>
+
+        <div class="mx-auto w-full max-w-3xl shrink-0 pt-6">
+          <h2 data-reveal class="mb-4 text-center text-xl font-bold tracking-tight text-text-1">Fale com a gente</h2>
+          <div data-reveal class="flex flex-wrap justify-center gap-3">
+            <a
+              href={`mailto:${CONTATO_EMAIL}`}
+              class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm text-text-2 transition-colors hover:border-accent/40 hover:text-text-1"
+              data-cursor="mais"
+            >
+              <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"/>
+              </svg>
+              {CONTATO_EMAIL}
+            </a>
+            <a
+              href={`https://wa.me/${CONTATO_WHATSAPP_DIGITOS}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm text-text-2 transition-colors hover:border-accent/40 hover:text-text-1"
+              data-cursor="mais"
+            >
+              <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                <path d="M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118.63a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.6,30.6,8,8,0,0,0,7.51-.72l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.11-.75L40,215l11.55-34.66a8,8,0,0,0-.75-6.44A88,88,0,1,1,128,216Z"/>
+              </svg>
+              {CONTATO_WHATSAPP_EXIBICAO}
+            </a>
+            <a
+              href={CONTATO_GITHUB}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm text-text-2 transition-colors hover:border-accent/40 hover:text-text-1"
+              data-cursor="mais"
+            >
+              <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+              </svg>
+              GitHub
+            </a>
+            <a
+              href={CONTATO_LINKEDIN}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm text-text-2 transition-colors hover:border-accent/40 hover:text-text-1"
+              data-cursor="mais"
+            >
+              <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+                <path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24ZM96,176a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm-8-80a12,12,0,1,1,12-12A12,12,0,0,1,88,96Zm104,80a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,192,140Z"/>
+              </svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Controles -->
+    <div class="relative z-10 flex shrink-0 items-center justify-center gap-3 pb-4 pt-2">
+      <button
+        type="button"
+        id="sn-prev"
+        aria-label="Seção anterior"
+        class="flex size-9 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-text-1 transition-colors hover:bg-surface"
+      >
+        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+          <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        id="sn-play"
+        aria-label="Pausar apresentação"
+        class="relative flex size-10 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-text-1 transition-colors hover:bg-surface"
+      >
+        <svg class="absolute inset-0 -rotate-90" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="16" fill="none" stroke="var(--border-strong)" stroke-width="2.5" />
+        </svg>
+        <svg id="sn-ring" class="absolute inset-0 -rotate-90" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="16" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" pathLength="100" stroke-dasharray="100" />
+        </svg>
+        <svg id="sn-icon-pause" class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+          <path d="M200,32H160a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H160V48h40ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Zm0,176H56V48H96Z"/>
+        </svg>
+        <svg id="sn-icon-play" class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden hidden>
+          <path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        id="sn-next"
+        aria-label="Próxima seção"
+        class="flex size-9 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-text-1 transition-colors hover:bg-surface"
+      >
+        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden>
+          <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/>
+        </svg>
+      </button>
     </div>
   </div>
 </SiteLayout>
+
+<style>
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .sn-slide.is-active [data-reveal] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  [data-reveal]:nth-child(1) {
+    transition-delay: 0s;
+  }
+  [data-reveal]:nth-child(2) {
+    transition-delay: 0.08s;
+  }
+  [data-reveal]:nth-child(3) {
+    transition-delay: 0.16s;
+  }
+  [data-reveal]:nth-child(4) {
+    transition-delay: 0.24s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      transition: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const INTERVALO_MS = 8000
+  const container = document.getElementById('sn-slides')
+
+  if (container) {
+    const slides = Array.from(container.querySelectorAll<HTMLElement>('.sn-slide'))
+    const N = slides.length
+    let indice = 0
+    let timer = 0
+
+    const prefereReduzido =
+      typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let pausado = prefereReduzido
+
+    const playBtn = document.getElementById('sn-play')
+    const anel = document.getElementById('sn-ring')?.querySelector('circle')
+    const iconePause = document.getElementById('sn-icon-pause')
+    const iconePlay = document.getElementById('sn-icon-play')
+
+    function reiniciarAnel() {
+      if (!anel) return
+      anel.style.animation = 'none'
+      void anel.getBoundingClientRect()
+      anel.style.animation = pausado ? 'none' : `deck-ring ${INTERVALO_MS}ms linear forwards`
+    }
+
+    function agendar() {
+      window.clearTimeout(timer)
+      if (pausado) return
+      timer = window.setTimeout(() => mostrar(indice + 1), INTERVALO_MS)
+    }
+
+    function mostrar(i: number) {
+      indice = ((i % N) + N) % N
+      slides.forEach((slide, idx) => {
+        const ativo = idx === indice
+        slide.hidden = !ativo
+        slide.classList.toggle('is-active', ativo)
+      })
+      reiniciarAnel()
+      agendar()
+    }
+
+    document.getElementById('sn-prev')?.addEventListener('click', () => mostrar(indice - 1))
+    document.getElementById('sn-next')?.addEventListener('click', () => mostrar(indice + 1))
+
+    playBtn?.addEventListener('click', () => {
+      pausado = !pausado
+      playBtn.setAttribute('aria-label', pausado ? 'Retomar apresentação' : 'Pausar apresentação')
+      iconePause?.toggleAttribute('hidden', pausado)
+      iconePlay?.toggleAttribute('hidden', !pausado)
+      if (pausado) window.clearTimeout(timer)
+      else agendar()
+      reiniciarAnel()
+    })
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') mostrar(indice - 1)
+      if (e.key === 'ArrowRight') mostrar(indice + 1)
+    })
+
+    if (prefereReduzido) {
+      playBtn?.setAttribute('aria-label', 'Retomar apresentação')
+      iconePause?.toggleAttribute('hidden', true)
+      iconePlay?.toggleAttribute('hidden', false)
+    } else {
+      reiniciarAnel()
+      agendar()
+    }
+  }
+</script>
