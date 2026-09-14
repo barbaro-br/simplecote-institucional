@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/cotacao/:token",
+      "destination": "https://app.simplecote.app/cotacao/:token",
+      "permanent": true
+    },
+    {
+      "source": "/pedido/:token",
+      "destination": "https://app.simplecote.app/pedido/:token",
+      "permanent": true
+    },
+    {
+      "source": "/colaborador/:token",
+      "destination": "https://app.simplecote.app/colaborador/:token",
+      "permanent": true
+    }
+  ]
+}
